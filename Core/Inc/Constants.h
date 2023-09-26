@@ -30,6 +30,7 @@
 #define CAN_DEFAULT_STDID 0x000
 // StdId 0x720 messages are to be forwarded to DCM, through CanIf
 #define CAN_DCM_STDID 0x720
+#define CAN_DCM_RESPONSE_STDID 0x721
 
 /* TEST-SPECIFIC CONSTANTS */
 #define COMDIA_TEST_OK COMDIA_OK

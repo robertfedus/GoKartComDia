@@ -35,7 +35,7 @@ void PduR_MainFunction(CANTp_Frame *framePduR){
     for(int i=0;i<2;i++){
 
       if(framePduR->id==ids[i]) {
-          operations[i](framePduR);
+          operations[i](&framePduR);
       }
 
     }
