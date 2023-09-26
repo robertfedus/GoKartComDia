@@ -40,6 +40,20 @@ typedef uint8_t CanIf_MessageLength;
 
 /* CANTP-SPECIFIC TYPES */
 
+// Mapping the CAN Driver payload to a CAN Tp payload
+typedef CanIf_Payload CanTp_Payload;
+
+typedef CanIf_StdId CanTp_StdId;
+
+typedef uint8_t CanTp_MessageLength;
+
+typedef struct {
+	CanTp_StdId id;
+    CanTp_MessageLength length;
+    CanTp_Payload data[8];
+}CANTp_Frame;
+
+
 /* STM32 ABSTRACT TYPES */
 
 // CAN Controller Instance
