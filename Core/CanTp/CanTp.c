@@ -12,6 +12,7 @@ ComDia_StatusFlag CanTp_RxIndication(CanIf_StdId id, CanIf_MessageLength length,
 }
 
 // Setati parametrii si implementati functia asta
+//com
 ComDia_StatusFlag CanTp_TxConfirmation(void)
 {
 	return COMDIA_OK;
