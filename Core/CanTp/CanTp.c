@@ -63,8 +63,6 @@ void DCM_to_PduR(CANTp_Frame *framePduR){
     for(uint8_t i=0; i<=frameDCM.length; i++){
         framePduR->data[i] = frameDCM.data[i];
     }
-
-
 }
 
 void PduR_to_CanTp(CANTp_Frame *framePduR){
@@ -76,7 +74,6 @@ void PduR_to_CanTp(CANTp_Frame *framePduR){
 
     CanTp_TxConfirmation(&frameCanIf);
 }
-
 
 void CanTp_TxConfirmation(CANTp_Frame* frameCanIf)
 {
