@@ -10,6 +10,7 @@
 CANTp_Frame frameCanTp;//structura facuta pentru a testa functionalitatea codului
 CANTp_Frame framePduR;//structura din PduR
 CANTp_Frame frameDCM;//structura din DCM
+CANTp_Frame frameCanIf;//structura din DCM
 
 void CanTp_RxIndication(CanTp_StdId id, CanTp_MessageLength length, CanTp_Payload *data)
 {
