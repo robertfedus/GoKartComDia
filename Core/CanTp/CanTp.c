@@ -12,6 +12,11 @@ CANTp_Frame framePduR;//structura din PduR
 CANTp_Frame frameDCM;//structura din DCM
 CANTp_Frame frameCanIf;//structura din DCM
 
+CanTp_StdId ids[2] = {0x720,//DCM id
+                     0x721};//CAN IF id
+
+void (*operations[])(CANTp_Frame *frame) = {PduR_to_DCM, PduR_to_CanTp};
+
 ComDia_StatusFlag CanTp_RxIndication(CanTp_StdId id, CanTp_MessageLength length, CanTp_Payload *data)
 {
 	frameCanTp.id = id;
