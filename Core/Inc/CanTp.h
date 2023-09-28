@@ -18,9 +18,9 @@
 
 void CanTp_to_PduR();
 void PduR_MainFunction(CanTp_Frame *framePduR);
-void PduR_to_DCM(CanTp_Frame *framePduR);
+void PduR_to_DCM(CanTp_Frame *CanTp_DcmFrame);
 void DCM_to_PduR(CanTp_Frame *framePduR);
-void PduR_to_CanTp(CanTp_Frame *framePduR);
+void PduR_to_CanTp();
 
 
 
