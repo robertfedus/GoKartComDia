@@ -47,12 +47,21 @@ Mcu.IP12=USB_HOST
 Mcu.IP13=USB_OTG_HS
 Mcu.IP2=DMA2D
 Mcu.IP3=FMC
+<<<<<<< Updated upstream
 Mcu.IP4=FREERTOS
 Mcu.IP5=NVIC
 Mcu.IP6=RCC
 Mcu.IP7=SPI5
 Mcu.IP8=SYS
 Mcu.IP9=TIM1
+=======
+Mcu.IP4=NVIC
+Mcu.IP5=RCC
+Mcu.IP6=SPI5
+Mcu.IP7=SYS
+Mcu.IP8=TIM1
+Mcu.IP9=TIM2
+>>>>>>> Stashed changes
 Mcu.IPNb=14
 Mcu.Name=STM32F429ZITx
 Mcu.Package=LQFP144
@@ -142,9 +151,15 @@ Mcu.Pin83=PE0
 Mcu.Pin84=PE1
 Mcu.Pin85=VP_CRC_VS_CRC
 Mcu.Pin86=VP_DMA2D_VS_DMA2D
+<<<<<<< Updated upstream
 Mcu.Pin87=VP_FREERTOS_VS_CMSIS_V1
 Mcu.Pin88=VP_SYS_VS_tim6
 Mcu.Pin89=VP_TIM1_VS_ClockSourceINT
+=======
+Mcu.Pin87=VP_SYS_VS_tim6
+Mcu.Pin88=VP_TIM1_VS_ClockSourceINT
+Mcu.Pin89=VP_TIM2_VS_ClockSourceINT
+>>>>>>> Stashed changes
 Mcu.Pin9=PF8
 Mcu.Pin90=VP_USB_HOST_VS_USB_HOST_CDC_HS
 Mcu.PinsNb=91
@@ -165,12 +180,19 @@ NVIC.NonMaskableInt_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false\:fa
 NVIC.OTG_HS_IRQn=true\:5\:0\:false\:false\:true\:true\:true\:true\:true
 NVIC.PendSV_IRQn=true\:15\:0\:false\:false\:false\:true\:false\:false\:false
 NVIC.PriorityGroup=NVIC_PRIORITYGROUP_4
+<<<<<<< Updated upstream
 NVIC.SVCall_IRQn=true\:0\:0\:false\:false\:false\:false\:false\:false\:false
 NVIC.SavedPendsvIrqHandlerGenerated=true
 NVIC.SavedSvcallIrqHandlerGenerated=true
 NVIC.SavedSystickIrqHandlerGenerated=true
 NVIC.SysTick_IRQn=true\:15\:0\:false\:false\:false\:true\:false\:true\:false
 NVIC.TIM6_DAC_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:true\:true
+=======
+NVIC.SVCall_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
+NVIC.SysTick_IRQn=true\:15\:0\:false\:false\:true\:false\:true\:false
+NVIC.TIM2_IRQn=true\:0\:0\:false\:false\:true\:true\:true\:true
+NVIC.TIM6_DAC_IRQn=true\:15\:0\:false\:false\:true\:false\:true\:true
+>>>>>>> Stashed changes
 NVIC.TimeBase=TIM6_DAC_IRQn
 NVIC.TimeBaseIP=TIM6
 NVIC.UsageFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false\:false
@@ -764,7 +786,7 @@ ProjectManager.ToolChainLocation=
 ProjectManager.UAScriptAfterPath=
 ProjectManager.UAScriptBeforePath=
 ProjectManager.UnderRoot=true
-ProjectManager.functionlistsort=1-SystemClock_Config-RCC-false-HAL-false,2-MX_GPIO_Init-GPIO-false-HAL-true,3-MX_CRC_Init-CRC-false-HAL-true,4-MX_DMA2D_Init-DMA2D-false-HAL-true,5-MX_FMC_Init-FMC-false-HAL-true,6-MX_SPI5_Init-SPI5-false-HAL-true,7-MX_TIM1_Init-TIM1-false-HAL-true,8-MX_USART1_UART_Init-USART1-false-HAL-true,9-MX_USB_HOST_Init-USB_HOST-false-HAL-false,10-MX_CAN1_Init-CAN1-false-HAL-true,11-MX_USART2_UART_Init-USART2-false-HAL-true
+ProjectManager.functionlistsort=1-SystemClock_Config-RCC-false-HAL-false,2-MX_GPIO_Init-GPIO-false-HAL-true,3-MX_CRC_Init-CRC-false-HAL-true,4-MX_DMA2D_Init-DMA2D-false-HAL-true,5-MX_FMC_Init-FMC-false-HAL-true,6-MX_SPI5_Init-SPI5-false-HAL-true,7-MX_TIM1_Init-TIM1-false-HAL-true,8-MX_USART1_UART_Init-USART1-false-HAL-true,9-MX_USB_HOST_Init-USB_HOST-false-HAL-false,10-MX_CAN1_Init-CAN1-false-HAL-true,11-MX_USART2_UART_Init-USART2-false-HAL-true,12-MX_TIM2_Init-TIM2-false-HAL-true
 RCC.48MHZClocksFreq_Value=48000000
 RCC.AHBFreq_Value=72000000
 RCC.APB1CLKDivider=RCC_HCLK_DIV2
@@ -921,6 +943,8 @@ VP_SYS_VS_tim6.Mode=TIM6
 VP_SYS_VS_tim6.Signal=SYS_VS_tim6
 VP_TIM1_VS_ClockSourceINT.Mode=Internal
 VP_TIM1_VS_ClockSourceINT.Signal=TIM1_VS_ClockSourceINT
+VP_TIM2_VS_ClockSourceINT.Mode=Internal
+VP_TIM2_VS_ClockSourceINT.Signal=TIM2_VS_ClockSourceINT
 VP_USB_HOST_VS_USB_HOST_CDC_HS.Mode=CDC_HS
 VP_USB_HOST_VS_USB_HOST_CDC_HS.Signal=USB_HOST_VS_USB_HOST_CDC_HS
 board=STM32F429I-DISC1
