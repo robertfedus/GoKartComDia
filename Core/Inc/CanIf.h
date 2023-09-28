@@ -12,7 +12,6 @@
 #include <Types.h>
 #include <CanTp.h>
 #include "main.h"
-#include "cmsis_os.h"
 #include "usb_host.h"
 
 void CanIf_MainFunction(void);
@@ -36,5 +35,7 @@ ComDia_StatusFlag CanIf_TxConfirmation(CanIf_StdId messageStdId, CanIf_MessageLe
   * @brief  CAN Interface Error Handler; disables IRQ interrupts and sits in infinite loop
   */
 void CanIf_ErrorHandler();
+
+void CanIf_Client(void);
 
 #endif /* INC_CANIF_H_ */

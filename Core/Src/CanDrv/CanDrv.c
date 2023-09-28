@@ -27,23 +27,18 @@ ComDia_StatusFlag Can_IsReadyFlag = CAN_NOT_READY;
 void Can_MainFunction(void)
 {
 	// Initialization of CAN Controller
-	if (Can_Init(&Can_Hcan1, &Can_Can1Filter, &Can_IsReadyFlag) == CAN_READY)
+	if (Can_Init(&Can_Hcan1, &Can_Can1Filter, &Can_IsReadyFlag) == CAN_NOT_READY)
 	{
-		// Messages are being transmitted below at 1-second intervals and received by HAL_CAN_RxFifo0MsgPendingCallback
-		CanIf_MainFunction();
-	}
-	else
-	{
-		// Call error handler in case the initialization result is not CAN_READY
+		// Call error handler in case the de-initialization result is not CAN_READY
 		Can_ErrorHandler();
 	}
 
-	// Deinitialization of CAN Controller
-	if (Can_DeInit(&Can_Hcan1, &Can_IsReadyFlag) != CAN_NOT_READY)
-	{
-		// Call error handler in case the de-initialization result is not CAN_NOT_READY
-		Can_ErrorHandler();
-	}
+//	// Deinitialization of CAN Controller
+//	if (Can_DeInit(&Can_Hcan1, &Can_IsReadyFlag) != CAN_NOT_READY)
+//	{
+//		// Call error handler in case the de-initialization result is not CAN_NOT_READY
+//		Can_ErrorHandler();
+//	}
 }
 
 /**

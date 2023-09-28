@@ -9,7 +9,6 @@
 #define INC_TYPES_H_
 
 #include "main.h"
-#include "cmsis_os.h"
 #include "usb_host.h"
 #include <Constants.h>
 

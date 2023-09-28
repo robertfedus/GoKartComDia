@@ -8,25 +8,26 @@
 #include <CanIf.h>
 #include <CanDrv.h>
 
+// Messages are being transmitted below at 1-second intervals and received by HAL_CAN_RxFifo0MsgPendingCallback in CanDrv
 void CanIf_MainFunction(void)
 {
-	// Loop to transmit messages at 1-second intervals
-	for(;;)
+	Can_MainFunction();
+
+}
+
+void CanIf_Client(void)
+{
+	// StdId for the transmitted message
+	Can_StdId messageStdId = CAN_DCM_STDID;
+	// Transmitted message length
+	Can_MessageLength messageLength = 6;
+	// Transmitted payload
+	Can_Payload Can_TxData[6] = { 0x43, 0x48, 0x4F, 0x43, 0x48, 0x4F };
+	// Call CanDrv to transmit data to the CAN bus
+	if (CanIf_TxConfirmation(messageStdId, messageLength, Can_TxData) == COMDIA_NOT_OK)
 	{
-		// StdId for the transmitted message
-		Can_StdId messageStdId = CAN_DCM_STDID;
-		// Transmitted message length
-		Can_MessageLength messageLength = 6;
-		// Transmitted payload
-		Can_Payload Can_TxData[6] = { 0x43, 0x48, 0x4F, 0x43, 0x48, 0x4F };
-		// Call CanDrv to transmit data to the CAN bus
-		if (CanIf_TxConfirmation(messageStdId, messageLength, Can_TxData) == COMDIA_NOT_OK)
-		{
-			// Call error handler in case the result is an error status
-			CanIf_ErrorHandler();
-		}
-		// Add delay of 1 second between transmissions
-		HAL_Delay (1000);
+		// Call error handler in case the result is an error status
+		CanIf_ErrorHandler();
 	}
 }
 

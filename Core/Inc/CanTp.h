@@ -12,7 +12,6 @@
 #include <Types.h>
 #include <CanIf.h>
 #include "main.h"
-#include "cmsis_os.h"
 #include "usb_host.h"
 
 
