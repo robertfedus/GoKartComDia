@@ -28,6 +28,7 @@
 /* In CanDrv messages not related to the modules below are discarded */
 // StdId 0x000 messages are sent to CanIf by default
 #define CAN_DEFAULT_STDID 0x000
+#define CAN_MAX_MESSAGE_LENGTH 0x08
 // StdId 0x720 messages are to be forwarded to DCM, through CanIf
 #define CAN_DCM_STDID 0x720
 #define CAN_DCM_RESPONSE_STDID 0x721

@@ -47,11 +47,12 @@ typedef CanIf_StdId CanTp_StdId;
 
 typedef uint8_t CanTp_MessageLength;
 
-typedef struct {
+typedef struct
+{
 	CanTp_StdId id;
     CanTp_MessageLength length;
     CanTp_Payload data[8];
-}CANTp_Frame;
+} CanTp_Frame;
 
 
 /* STM32 ABSTRACT TYPES */
