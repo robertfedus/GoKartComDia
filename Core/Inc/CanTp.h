@@ -11,11 +11,23 @@
 #include <Constants.h>
 #include <Types.h>
 #include <CanIf.h>
+#include "main.h"
+#include "cmsis_os.h"
+#include "usb_host.h"
+
+
+void CanTp_to_PduR();
+void PduR_MainFunction(CanTp_Frame *framePduR);
+void PduR_to_DCM(CanTp_Frame *framePduR);
+void DCM_to_PduR(CanTp_Frame *framePduR);
+void PduR_to_CanTp(CanTp_Frame *framePduR);
+
+
 
 ComDia_StatusFlag CanTp_RxIndication(CanIf_StdId id, CanIf_MessageLength length, CanIf_Payload *data);
 
 // Setati parametrii si implementati functia asta
-ComDia_StatusFlag CanTp_TxConfirmation(void);
+void CanTp_TxConfirmation(CanTp_Frame* frameCanIf);
 
 void CanTp_ErrorHandler(void);
 
