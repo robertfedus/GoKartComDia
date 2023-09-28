@@ -41,7 +41,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+volatile int Counter_Task_5ms = 0;
+volatile int Counter_Task_10ms = 0;
+volatile int Counter_Task_1s = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -58,6 +60,7 @@
 extern HCD_HandleTypeDef hhcd_USB_OTG_HS;
 extern CAN_HandleTypeDef hcan1;
 extern DMA2D_HandleTypeDef hdma2d;
+extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN EV */
@@ -228,6 +231,22 @@ void CAN1_RX1_IRQHandler(void)
   /* USER CODE BEGIN CAN1_RX1_IRQn 1 */
 
   /* USER CODE END CAN1_RX1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM2 global interrupt.
+  */
+void TIM2_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM2_IRQn 0 */
+
+  /* USER CODE END TIM2_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim2);
+  /* USER CODE BEGIN TIM2_IRQn 1 */
+  Counter_Task_5ms++;
+  Counter_Task_10ms++;
+  Counter_Task_1s++;
+  /* USER CODE END TIM2_IRQn 1 */
 }
 
 /**
