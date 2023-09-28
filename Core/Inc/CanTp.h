@@ -16,7 +16,7 @@
 #include "usb_host.h"
 
 
-void CanTp_to_PduR(CanTp_Frame *framePduR);
+void CanTp_to_PduR();
 void PduR_MainFunction(CanTp_Frame *framePduR);
 void PduR_to_DCM(CanTp_Frame *framePduR);
 void DCM_to_PduR(CanTp_Frame *framePduR);
