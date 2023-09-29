@@ -43,14 +43,14 @@ void CanTp_to_PduR()
 
 }
 
-void PduR_MainFunction(CanTp_Frame *PduRFrame)
+void PduR_MainFunction()
 {
     for(int i = 0; i < 2; i++)
     {
 
-      if(PduRFrame->id == ids[i])
+      if(CanTp_PduRFrame.id == ids[i])
       {
-          operations[i](PduRFrame);
+          operations[i](&CanTp_PduRFrame);
       }
 
     }
