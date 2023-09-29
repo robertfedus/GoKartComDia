@@ -10,8 +10,8 @@
 
 #include <Constants.h>
 #include <main.h>
-#include <stm32f4xx_it.h>
 #include <CanIf.h>
+#include <Counters.h>
 
 void Task_Handler(void);
 

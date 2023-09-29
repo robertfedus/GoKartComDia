@@ -7,11 +7,6 @@
 
 #include <OS.h>
 
-// Counters for tasks
-extern int Counter_Task_5ms;
-extern int Counter_Task_10ms;
-extern int Counter_Task_1s;
-
 void Task_Handler(void)
 {
 
@@ -29,7 +24,10 @@ void Task_Handler(void)
 
 	if (Counter_Task_1s == TASK_1s)
 	{
+
+		HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
 		CanIf_Client();
+
 		Counter_Task_1s = 0;
 	}
 }
