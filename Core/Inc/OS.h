@@ -12,6 +12,7 @@
 #include <main.h>
 #include <CanIf.h>
 #include <Counters.h>
+#include "stm32f4xx_hal.h"
 
 void Task_Handler(void);
 

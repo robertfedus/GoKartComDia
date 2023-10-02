@@ -13,6 +13,12 @@ CanTp_Frame CanTp_DcmFrame;
 CanTp_Frame CanTp_CanIfFrame;
 CanTp_StdId ids[2] = {0x720,//DCM id
                      0x721};//CAN IF id
+CanTp_Frame *CanTp_DcmFrame_Prev;
+
+void CanTp_Init(void)
+{
+	CanTp_DcmFrame_Prev->id = -1;
+}
 
 void (*operations[])(CanTp_Frame *frame) = {PduR_to_DCM, PduR_to_CanTp};
 
@@ -56,24 +62,48 @@ void PduR_MainFunction()
     }
 }
 
+
+
 void PduR_to_DCM(CanTp_Frame *CanTp_DcmFrame)
 {
-    CanTp_DcmFrame->id = CanTp_PduRFrame.id;
-    CanTp_DcmFrame->length = CanTp_PduRFrame.length;
+	if (CanTp_DcmFrame->id != CanTp_DcmFrame_Prev->id
+		|| CanTp_DcmFrame->length != CanTp_DcmFrame_Prev->length)
+	{
+		uint8_t i;
 
-    for(uint8_t i = 0; i < CAN_MAX_MESSAGE_LENGTH; i++)
-    {
-    	if (i < CanTp_PduRFrame.length)
-    	{
-    		CanTp_DcmFrame->data[i] = CanTp_PduRFrame.data[i];
-    	}
-    	else
-    	{
-    		// Restul mesajului se umple cu 0x00, pana la CAN_MAX_MESSAGE_LENGTH
-    		CanTp_DcmFrame->data[i] = 0x00;
-    	}
-    }
-    GetResponse(CanTp_DcmFrame);
+		for (i = 0; i < CanTp_DcmFrame->length; i++)
+		{
+			if (CanTp_DcmFrame->data[i] != CanTp_DcmFrame_Prev->data[i])
+			{
+				break;
+			}
+		}
+
+		if (i == CanTp_DcmFrame->length)
+		{
+			return;
+		}
+
+		CanTp_DcmFrame->id = CanTp_PduRFrame.id;
+		CanTp_DcmFrame->length = CanTp_PduRFrame.length;
+
+
+		for(i = 0; i < CAN_MAX_MESSAGE_LENGTH; i++)
+		{
+			if (i < CanTp_PduRFrame.length)
+			{
+				CanTp_DcmFrame->data[i] = CanTp_PduRFrame.data[i];
+			}
+			else
+			{
+				// Restul mesajului se umple cu 0x00, pana la CAN_MAX_MESSAGE_LENGTH
+				CanTp_DcmFrame->data[i] = 0x00;
+			}
+		}
+		GetResponse(CanTp_DcmFrame);
+	}
+
+	CanTp_DcmFrame_Prev = CanTp_DcmFrame;
 }
 
 void DCM_to_PduR(CanTp_Frame *PduRFrame)

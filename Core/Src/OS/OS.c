@@ -5,7 +5,12 @@
  *      Author: MNN1CLJ
  */
 
+
 #include <OS.h>
+
+ extern volatile int Counter_Task_5ms;
+ extern volatile int Counter_Task_10ms;
+ extern volatile int Counter_Task_1s;
 
 void Task_Handler(void)
 {
@@ -25,7 +30,7 @@ void Task_Handler(void)
 	if (Counter_Task_1s == TASK_1s)
 	{
 
-		HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
+		HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_13);
 		CanIf_Client();
 
 		Counter_Task_1s = 0;

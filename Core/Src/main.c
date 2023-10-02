@@ -124,7 +124,11 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  if (HAL_TIM_Base_Start_IT(&htim2) != HAL_OK)
+      {
+        /* Starting Error */
+        Error_Handler();
+      }
   // int main se va curata la final; poate se mai configureaza intreruperi
 //  if (COMDIA_APP_STAGE == COMDIA_TEST_STAGE)
 //  {
@@ -140,7 +144,8 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   CanIf_MainFunction();
-  Task_Handler();
+  CanTp_Init();
+
   while (1)
   {
 
@@ -149,7 +154,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-
+    Task_Handler();
   }
   /* USER CODE END 3 */
 }
@@ -406,7 +411,7 @@ static void MX_TIM2_Init(void)
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim2.Init.Period = 72;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
   {
     Error_Handler();

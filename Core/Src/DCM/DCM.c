@@ -104,6 +104,13 @@ void GetResponse(CanTp_Frame *DCM_request)
 		ResponseHandler(DCM_response, &DCM_PDUR_response, WRITE_MEMORY_BY_ADDRESS, DCM_responseData, length_output);
 		break;
 	}
+	default:
+	{
+		DCM_PDUR_response.length = 3;
+		DCM_PDUR_response.data[0] = 0x7F;
+		DCM_PDUR_response.data[1] = DCM_request->data[0];
+		DCM_PDUR_response.data[2] = SERVICE_NOT_SUPPORTED;
+	}
     }
 
     DCM_to_PduR(&DCM_PDUR_response); //sent the response to the PDUR
