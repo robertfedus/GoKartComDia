@@ -40,7 +40,7 @@
 /* TIMER */
 // Periods of tasks
 #define TASK_5ms 5
-#define TASK_10ms 10
+#define TASK_10ms 100
 #define TASK_1s 1000
 
 #endif /* INC_CONSTANTS_H_ */

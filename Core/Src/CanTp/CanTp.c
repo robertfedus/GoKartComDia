@@ -66,24 +66,38 @@ void PduR_MainFunction()
 
 void PduR_to_DCM(CanTp_Frame *CanTp_DcmFrame)
 {
+	uint8_t newMessage;
+	uint8_t i;
+
 	if (CanTp_DcmFrame->id != CanTp_DcmFrame_Prev->id
 		|| CanTp_DcmFrame->length != CanTp_DcmFrame_Prev->length)
 	{
-		uint8_t i;
+		newMessage = 1;
+	}
+	else if (CanTp_DcmFrame->length == CanTp_DcmFrame_Prev->length)
+	{
 
 		for (i = 0; i < CanTp_DcmFrame->length; i++)
 		{
-			if (CanTp_DcmFrame->data[i] != CanTp_DcmFrame_Prev->data[i])
-			{
-				break;
-			}
+				if (CanTp_DcmFrame->data[i] != CanTp_DcmFrame_Prev->data[i])
+				{
+					break;
+				}
 		}
 
 		if (i == CanTp_DcmFrame->length)
 		{
-			return;
+			newMessage = 0;
 		}
+		else
+		{
+			HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
+			newMessage = 1;
+		}
+	}
 
+	if (newMessage == 1)
+	{
 		CanTp_DcmFrame->id = CanTp_PduRFrame.id;
 		CanTp_DcmFrame->length = CanTp_PduRFrame.length;
 
@@ -100,21 +114,24 @@ void PduR_to_DCM(CanTp_Frame *CanTp_DcmFrame)
 				CanTp_DcmFrame->data[i] = 0x00;
 			}
 		}
+
+		CanTp_DcmFrame_Prev = CanTp_DcmFrame;
+
 		GetResponse(CanTp_DcmFrame);
 	}
 
-	CanTp_DcmFrame_Prev = CanTp_DcmFrame;
 }
 
 void DCM_to_PduR(CanTp_Frame *PduRFrame)
 {
-	PduRFrame->id = CanTp_DcmFrame.id;
-	PduRFrame->length = CanTp_DcmFrame.length;
+	CanTp_PduRFrame.id = PduRFrame->id;
+	CanTp_PduRFrame.length = PduRFrame->length;
 
-    for(uint8_t i = 0; i < CanTp_DcmFrame.length; i++)
+    for(uint8_t i = 0; i < CanTp_PduRFrame.length; i++)
     {
-    	PduRFrame->data[i] = CanTp_DcmFrame.data[i];
+    	CanTp_PduRFrame.data[i] = PduRFrame->data[i];
     }
+
 }
 
 void PduR_to_CanTp()
@@ -126,6 +143,12 @@ void PduR_to_CanTp()
     {
         CanTp_CanTpFrame.data[i] = CanTp_PduRFrame.data[i];
     }
+
+    for(uint8_t i = CanTp_PduRFrame.length; i < CAN_MAX_MESSAGE_LENGTH; i++)
+        {
+        	// Restul mesajului se umple cu 0x00, pana la CAN_MAX_MESSAGE_LENGTH
+    	CanTp_CanTpFrame.data[i] = 0x00;
+        }
 
     CanTp_TxConfirmation(&CanTp_CanIfFrame);
 }

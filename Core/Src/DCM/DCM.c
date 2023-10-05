@@ -106,6 +106,7 @@ void GetResponse(CanTp_Frame *DCM_request)
 	}
 	default:
 	{
+		DCM_PDUR_response.id = CAN_DCM_RESPONSE_STDID;
 		DCM_PDUR_response.length = 3;
 		DCM_PDUR_response.data[0] = 0x7F;
 		DCM_PDUR_response.data[1] = DCM_request->data[0];

@@ -25,8 +25,6 @@ void CanIf_Client(void)
 
 	if (step % 2 == 0)
 	{
-
-
 	// StdId for the transmitted message
 	messageStdId = CAN_DCM_STDID;
 	// Transmitted message length
@@ -38,9 +36,9 @@ void CanIf_Client(void)
 	 Can_TxData[3] = 0x43;
 	 Can_TxData[4] = 0x48;
 	 Can_TxData[5] = 0x4F;
+	 step++;
 	}
-	else
-	{
+	else {
 		// StdId for the transmitted message
 		messageStdId = CAN_DCM_STDID;
 		// Transmitted message length
@@ -59,7 +57,7 @@ void CanIf_Client(void)
 		// Call error handler in case the result is an error status
 		CanIf_ErrorHandler();
 	}
-	step++;
+
 }
 
 /**
