@@ -50,6 +50,7 @@ void CanIf_Client(void)
 		 Can_TxData[3] = 0x44;
 		 Can_TxData[4] = 0x48;
 		 Can_TxData[5] = 0x4F;
+		 step++;
 	}
 	// Call CanDrv to transmit data to the CAN bus
 	if (CanIf_TxConfirmation(messageStdId, messageLength, Can_TxData) == COMDIA_NOT_OK)

@@ -11,13 +11,14 @@ CanTp_Frame CanTp_CanTpFrame;//structura facuta pentru a testa functionalitatea 
 CanTp_Frame CanTp_PduRFrame;//structura din PduR
 CanTp_Frame CanTp_DcmFrame;
 CanTp_Frame CanTp_CanIfFrame;
-CanTp_StdId ids[2] = {0x720,//DCM id
+CanTp_StdId ids[3] = {0x720,//DCM id
                      0x721};//CAN IF id
-CanTp_Frame *CanTp_DcmFrame_Prev;
+CanTp_Frame CanTp_DcmFrame_Prev;
 
 void CanTp_Init(void)
 {
-	CanTp_DcmFrame_Prev->id = -1;
+	CanTp_DcmFrame_Prev.id = 0x85; // random value
+	CanTp_PduRFrame.id = -1;
 }
 
 void (*operations[])(CanTp_Frame *frame) = {PduR_to_DCM, PduR_to_CanTp};
@@ -69,17 +70,17 @@ void PduR_to_DCM(CanTp_Frame *CanTp_DcmFrame)
 	uint8_t newMessage;
 	uint8_t i;
 
-	if (CanTp_DcmFrame->id != CanTp_DcmFrame_Prev->id
-		|| CanTp_DcmFrame->length != CanTp_DcmFrame_Prev->length)
+	if (CanTp_DcmFrame->id != CanTp_DcmFrame_Prev.id
+		|| CanTp_DcmFrame->length != CanTp_DcmFrame_Prev.length)
 	{
 		newMessage = 1;
 	}
-	else if (CanTp_DcmFrame->length == CanTp_DcmFrame_Prev->length)
+	else if (CanTp_DcmFrame->length == CanTp_DcmFrame_Prev.length)
 	{
 
 		for (i = 0; i < CanTp_DcmFrame->length; i++)
 		{
-				if (CanTp_DcmFrame->data[i] != CanTp_DcmFrame_Prev->data[i])
+				if (CanTp_DcmFrame->data[i] != CanTp_DcmFrame_Prev.data[i])
 				{
 					break;
 				}
@@ -100,22 +101,23 @@ void PduR_to_DCM(CanTp_Frame *CanTp_DcmFrame)
 	{
 		CanTp_DcmFrame->id = CanTp_PduRFrame.id;
 		CanTp_DcmFrame->length = CanTp_PduRFrame.length;
-
+		CanTp_DcmFrame_Prev.id = CanTp_DcmFrame->id;
+		CanTp_DcmFrame_Prev.length = CanTp_DcmFrame->length;
 
 		for(i = 0; i < CAN_MAX_MESSAGE_LENGTH; i++)
 		{
-			if (i < CanTp_PduRFrame.length)
+			if (i < CanTp_DcmFrame->length)
 			{
 				CanTp_DcmFrame->data[i] = CanTp_PduRFrame.data[i];
+				CanTp_DcmFrame_Prev.data[i] = CanTp_PduRFrame.data[i];
 			}
 			else
 			{
 				// Restul mesajului se umple cu 0x00, pana la CAN_MAX_MESSAGE_LENGTH
 				CanTp_DcmFrame->data[i] = 0x00;
+				CanTp_DcmFrame_Prev.data[i] = 0x00;
 			}
 		}
-
-		CanTp_DcmFrame_Prev = CanTp_DcmFrame;
 
 		GetResponse(CanTp_DcmFrame);
 	}
@@ -150,7 +152,7 @@ void PduR_to_CanTp()
     	CanTp_CanTpFrame.data[i] = 0x00;
         }
 
-    CanTp_TxConfirmation(&CanTp_CanIfFrame);
+    CanTp_TxConfirmation(&CanTp_CanTpFrame);
 }
 
 void CanTp_TxConfirmation(CanTp_Frame* CanIfFrame)

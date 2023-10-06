@@ -98,10 +98,10 @@ ComDia_StatusFlag Can_Write(
 	TxHeader->ExtId = 0;
 	// CAN ID type
 	TxHeader->IDE = CAN_ID_STD;
+	// CAN messages STD ID
+	TxHeader->StdId = messageStdId;
 	// CAN frame type
 	TxHeader->RTR = CAN_RTR_DATA;
-	// CAN StdId
-	TxHeader->StdId = CAN_DCM_STDID;
 	// Enable to capture the initial time stamp of the transmission; not used
 	TxHeader->TransmitGlobalTime = DISABLE;
 
