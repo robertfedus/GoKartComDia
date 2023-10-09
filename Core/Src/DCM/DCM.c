@@ -148,13 +148,13 @@ uint8_t readDataByIdentifier(CanTp_Frame input, uint8_t *output, uint8_t *length
     (*length_output)++;
 
     //implementation
-    return 0x13;
+    return 0x00;
 }
 
 uint8_t readMemoryByAddress(CanTp_Frame input, uint8_t *output, uint8_t *length_output)
 {
     //implementation
-    return 0x00;
+    return 0x13;
 }
 
 uint8_t securityAccess(CanTp_Frame input, uint8_t *output, uint8_t *length_output)

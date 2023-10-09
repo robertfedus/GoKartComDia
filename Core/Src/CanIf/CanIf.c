@@ -28,28 +28,27 @@ void CanIf_Client(void)
 	// StdId for the transmitted message
 	messageStdId = CAN_DCM_STDID;
 	// Transmitted message length
-	messageLength = 6;
+	messageLength = 3;
 	// Transmitted payload
-	 Can_TxData[0] = 0x43;
-	 Can_TxData[1] = 0x48;
-	 Can_TxData[2] = 0x4F;
-	 Can_TxData[3] = 0x43;
-	 Can_TxData[4] = 0x48;
-	 Can_TxData[5] = 0x4F;
+	 Can_TxData[0] = 0x22;
+	 Can_TxData[1] = 0x84;
+	 Can_TxData[2] = 0x04;
 	 step++;
 	}
 	else {
 		// StdId for the transmitted message
 		messageStdId = CAN_DCM_STDID;
 		// Transmitted message length
-		messageLength = 6;
+		messageLength = 8;
 		// Transmitted payload
-		 Can_TxData[0] = 0x44;
-		 Can_TxData[1] = 0x48;
-		 Can_TxData[2] = 0x4F;
-		 Can_TxData[3] = 0x44;
-		 Can_TxData[4] = 0x48;
-		 Can_TxData[5] = 0x4F;
+		 Can_TxData[0] = 0x23;
+		 Can_TxData[1] = 0x24;
+		 Can_TxData[2] = 0x20;
+		 Can_TxData[3] = 0x48;
+		 Can_TxData[4] = 0x13;
+		 Can_TxData[5] = 0x92;
+		 Can_TxData[6] = 0x01;
+		 Can_TxData[7] = 0x03;
 		 step++;
 	}
 	// Call CanDrv to transmit data to the CAN bus
