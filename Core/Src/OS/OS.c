@@ -17,13 +17,12 @@ void Task_Handler(void)
 
 	if (Counter_Task_5ms == TASK_5ms)
 	{
-		PduR_MainFunction();
 		Counter_Task_5ms = 0;
 	}
 
 	if (Counter_Task_10ms == TASK_10ms)
 	{
-
+		PduR_MainFunction();
 		Counter_Task_10ms = 0;
 	}
 
