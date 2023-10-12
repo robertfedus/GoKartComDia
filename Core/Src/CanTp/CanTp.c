@@ -127,7 +127,7 @@ void PduR_to_DCM(CanTp_Frame *CanTp_DcmFrame)
 
 
 
-		Dcm_SendRequest(&Dcm_Request);
+		Dcm_GetRequest(&Dcm_Request);
 	}
 
 }

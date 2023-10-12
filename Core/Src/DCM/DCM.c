@@ -32,7 +32,7 @@ void Dcm_SendResponse(uint8_t DCM_response, CanTp_Frame *response, uint8_t servi
 
 }
 
-void Dcm_SendRequest(Dcm_Message *Dcm_Request)
+void Dcm_GetRequest(Dcm_Message *Dcm_Request)
 {
     uint8_t DCM_responseData[8]; //store data from the service
     CanTp_Frame DCM_PDUR_response; //the final response from DCM
@@ -42,66 +42,66 @@ void Dcm_SendRequest(Dcm_Message *Dcm_Request)
 
     switch (Dcm_Request->data[0])
     {
-        case DIAGNOSTIC_SESSION_CONTROL:
+        case DCM_SERVICE_ID_DIAGNOSTIC_SESSION_CONTROL:
 	{
 		DCM_response = Dcm_Service_DiagnosticSessionControl(*Dcm_Request, DCM_responseData, &length_output);//diagnosticSessionControl(sessionType_subfunction-1 byte); //check if the request has a positive or negative
-		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, DIAGNOSTIC_SESSION_CONTROL, DCM_responseData, length_output); // constructing the response - SingleFramePDU
+		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, DCM_SERVICE_ID_DIAGNOSTIC_SESSION_CONTROL, DCM_responseData, length_output); // constructing the response - SingleFramePDU
 		break;
 	}
 
-	case CLEAR_DIAGNOSTIC_INFORMATION:
+	case DCM_SERVICE_ID_CLEAR_DIAGNOSTIC_INFORMATION:
 	{
 		DCM_response = Dcm_Service_ClearDiagnosticInformation(*Dcm_Request, DCM_responseData, &length_output);//clearDiagnosticInformation(group_of_DTC-3 bytes value);
-        Dcm_SendResponse(DCM_response, &DCM_PDUR_response, CLEAR_DIAGNOSTIC_INFORMATION, DCM_responseData, length_output);
+        Dcm_SendResponse(DCM_response, &DCM_PDUR_response, DCM_SERVICE_ID_CLEAR_DIAGNOSTIC_INFORMATION, DCM_responseData, length_output);
 		break;
 	}
 
-	case READ_DTC_INFORMATION: //foarte multe subfunctii(21)
+	case DCM_SERVICE_ID_READ_DTC_INFORMATION: //foarte multe subfunctii(21)
 	{
 		DCM_response = Dcm_Service_ReadDTCInformation(*Dcm_Request, DCM_responseData, &length_output);//readDTCinformation(subfunction, DTCparametersArray-array of bytes);
-		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, READ_DTC_INFORMATION, DCM_responseData, length_output);
+		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, DCM_SERVICE_ID_READ_DTC_INFORMATION, DCM_responseData, length_output);
 		break;
 	}
 
-	case READ_DATA_BY_IDENTIFIER:
+	case DCM_SERVICE_ID_READ_DATA_BY_IDENTIFIER:
 	{
         DCM_response = Dcm_Service_ReadDataByIdentifier(*Dcm_Request, DCM_responseData, &length_output);//readDTCinformation(subfunction, DTCparametersArray-array of bytes);
-		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, READ_DATA_BY_IDENTIFIER, DCM_responseData, length_output);
+		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, DCM_SERVICE_ID_READ_DATA_BY_IDENTIFIER, DCM_responseData, length_output);
 		break;
 	}
 
-	case READ_MEMORY_BY_ADDRESS:
+	case DCM_SERVICE_ID_READ_MEMORY_BY_ADDRESS:
 	{
 		DCM_response = Dcm_Service_ReadMemoryByAddress(*Dcm_Request, DCM_responseData, &length_output);//readDTCinformation(subfunction, DTCparametersArray-array of bytes);
-		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, READ_MEMORY_BY_ADDRESS, DCM_responseData, length_output);
+		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, DCM_SERVICE_ID_READ_MEMORY_BY_ADDRESS, DCM_responseData, length_output);
 		break;
 	}
 
-	case SECURITY_ACCESS:
+	case DCM_SERVICE_ID_SECURITY_ACCESS:
 	{
 		DCM_response = Dcm_Service_SecurityAccess(*Dcm_Request, DCM_responseData, &length_output);//readDTCinformation(subfunction, DTCparametersArray-array of bytes);
-		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, SECURITY_ACCESS, DCM_responseData, length_output);
+		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, DCM_SERVICE_ID_SECURITY_ACCESS, DCM_responseData, length_output);
 		break;
 	}
 
-	case WRITE_DATA_BY_IDENTIFIER:
+	case DCM_SERVICE_ID_WRITE_DATA_BY_IDENTIFIER:
 	{
 		DCM_response = Dcm_Service_WriteDataByIdentifier(*Dcm_Request, DCM_responseData, &length_output);//readDTCinformation(subfunction, DTCparametersArray-array of bytes);
-		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, WRITE_DATA_BY_IDENTIFIER, DCM_responseData, length_output);
+		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, DCM_SERVICE_ID_WRITE_DATA_BY_IDENTIFIER, DCM_responseData, length_output);
 		break;
 	}
 
-	case ROUTINE_CONTROL:
+	case DCM_SERVICE_ID_ROUTINE_CONTROL:
 	{
 		DCM_response = Dcm_Service_RoutineControl(*Dcm_Request, DCM_responseData, &length_output);//readDTCinformation(subfunction, DTCparametersArray-array of bytes);
-		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, ROUTINE_CONTROL, DCM_responseData, length_output);
+		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, DCM_SERVICE_ID_ROUTINE_CONTROL, DCM_responseData, length_output);
 		break;
 	}
 
-	case WRITE_MEMORY_BY_ADDRESS:
+	case DCM_SERVICE_ID_WRITE_MEMORY_BY_ADDRESS:
 	{
 		DCM_response = Dcm_Service_WriteMemoryByAddress(*Dcm_Request, DCM_responseData, &length_output);//readDTCinformation(subfunction, DTCparametersArray-array of bytes);
-		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, WRITE_MEMORY_BY_ADDRESS, DCM_responseData, length_output);
+		Dcm_SendResponse(DCM_response, &DCM_PDUR_response, DCM_SERVICE_ID_WRITE_MEMORY_BY_ADDRESS, DCM_responseData, length_output);
 		break;
 	}
 	default:

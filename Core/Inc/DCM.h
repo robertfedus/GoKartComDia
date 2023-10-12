@@ -9,8 +9,6 @@
 #define INC_DCM_H_
 
 #include <Types.h>
-#include <Responses.h>
-#include <Services.h>
 #include <Constants.h>
 #include <CanTp.h>
 #include <main.h>
@@ -19,7 +17,7 @@
 void Dcm_SendResponse(uint8_t DCM_response, CanTp_Frame *response, uint8_t serviceID, uint8_t *responseData, uint8_t response_length);
 
 //DCM response
-void Dcm_SendRequest(Dcm_Message *request);
+void Dcm_GetRequest(Dcm_Message *request);
 
 // Services - not yet implemented
 uint8_t Dcm_Service_DiagnosticSessionControl(Dcm_Message input, uint8_t *output, uint8_t *length_output);
