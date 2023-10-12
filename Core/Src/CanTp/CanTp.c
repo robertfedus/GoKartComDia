@@ -5,7 +5,7 @@
  *      Author: REE2CLJ
  */
 #include <CanTp.h>
-#include <DCM.h>
+#include <Dcm.h>
 
 CanTp_Frame CanTp_CanTpFrame;//structura facuta pentru a testa functionalitatea codului
 CanTp_Frame CanTp_PduRFrame;//structura din PduR
@@ -99,6 +99,10 @@ void PduR_to_DCM(CanTp_Frame *CanTp_DcmFrame)
 
 	if (newMessage == 1)
 	{
+		Dcm_Message Dcm_Request;
+
+		Dcm_Request.length = CanTp_PduRFrame.length;
+
 		CanTp_DcmFrame->id = CanTp_PduRFrame.id;
 		CanTp_DcmFrame->length = CanTp_PduRFrame.length;
 		CanTp_DcmFrame_Prev.id = CanTp_DcmFrame->id;
@@ -108,6 +112,8 @@ void PduR_to_DCM(CanTp_Frame *CanTp_DcmFrame)
 		{
 			if (i < CanTp_DcmFrame->length)
 			{
+				Dcm_Request.data[i] = CanTp_PduRFrame.data[i];
+
 				CanTp_DcmFrame->data[i] = CanTp_PduRFrame.data[i];
 				CanTp_DcmFrame_Prev.data[i] = CanTp_PduRFrame.data[i];
 			}
@@ -119,7 +125,9 @@ void PduR_to_DCM(CanTp_Frame *CanTp_DcmFrame)
 			}
 		}
 
-		GetResponse(CanTp_DcmFrame);
+
+
+		Dcm_SendRequest(&Dcm_Request);
 	}
 
 }

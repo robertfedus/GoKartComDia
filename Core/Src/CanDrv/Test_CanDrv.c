@@ -35,6 +35,8 @@ ComDia_StatusFlag Test_CanDrv(void)
 	{
 		return COMDIA_TEST_NOT_OK;
 	}
+
+	return COMDIA_TEST_OK;
 }
 
 ComDia_StatusFlag Test_Can_Init(void)

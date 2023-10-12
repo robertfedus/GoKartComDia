@@ -154,7 +154,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-    Task_Handler();
+    OS_TaskHandler();
   }
   /* USER CODE END 3 */
 }

@@ -8,27 +8,44 @@
 
 #include <OS.h>
 
- extern volatile int Counter_Task_5ms;
- extern volatile int Counter_Task_10ms;
- extern volatile int Counter_Task_1s;
+ extern volatile int OS_5ms_TaskCounter;
+ extern volatile int OS_10ms_TaskCounter;
+ extern volatile int OS_1000ms_TaskCounter;
 
-void Task_Handler(void)
+void OS_TaskHandler(void)
 {
 
-	if (Counter_Task_5ms == TASK_5ms)
+	if (OS_5ms_TaskCounter == OS_5MS_TASK)
 	{
-		Counter_Task_5ms = 0;
+		OS_5ms_Task();
+		OS_5ms_TaskCounter = 0;
 	}
 
-	if (Counter_Task_10ms == TASK_10ms)
+	if (OS_10ms_TaskCounter == OS_10MS_TASK)
 	{
-		PduR_MainFunction();
-		Counter_Task_10ms = 0;
+		OS_10ms_Task();
+		OS_10ms_TaskCounter = 0;
 	}
 
-	if (Counter_Task_1s == TASK_1s)
+	if (OS_1000ms_TaskCounter == OS_1000MS_TASK)
 	{
-		CanIf_Client();
-		Counter_Task_1s = 0;
+		OS_1000ms_Task();
+
+		OS_1000ms_TaskCounter = 0;
 	}
+}
+
+void OS_1000ms_Task(void)
+{
+	CanIf_Client();
+}
+
+void OS_10ms_Task(void)
+{
+	PduR_MainFunction();
+}
+
+void OS_5ms_Task(void)
+{
+
 }
