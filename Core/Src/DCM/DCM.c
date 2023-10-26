@@ -7,6 +7,11 @@
 
 #include <Dcm.h>
 
+void Dcm_Init()
+{
+	Dcm_DID_Init();
+}
+
 //creating the response - serviceResponse -> 0x00 or NRC from the service; response -> the final response; serviceID -> id of the service;
 //responseData -> the data returned by the service in case of positive response; response_length -> length of the response data (without the serviceID)
 void Dcm_CreateResponse(uint8_t responseCode, CanTp_Frame *response, uint8_t serviceId, uint8_t *responseData, uint8_t responseLength)

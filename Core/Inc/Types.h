@@ -53,6 +53,21 @@ typedef struct
     CanTp_Payload data[8];
 } CanTp_Frame;
 
+/* DCM-SPECIFIC TYPES */
+typedef uint8_t Dcm_MessageLength;
+typedef uint8_t Dcm_MessageData;
+typedef struct
+{
+	Dcm_MessageLength length;
+	Dcm_MessageData data[8];
+} Dcm_Message;
+
+typedef struct
+{
+	uint16_t id;
+	uint8_t dataLength;
+	uint8_t *data;
+} Dcm_DID;
 
 /* STM32 ABSTRACT TYPES */
 
