@@ -88,7 +88,8 @@ ComDia_StatusFlag Can_MainFunctionRead()
   */
 ComDia_StatusFlag Can_Write(
 		Can_ControllerInstance *hcan,
-		Can_TxHeader *TxHeader, Can_StdId messageStdId,
+		Can_TxHeader *TxHeader,
+		Can_StdId messageStdId,
 		Can_MessageLength messageLength,
 		Can_Payload *Can_TxData)
 {

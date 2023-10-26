@@ -14,6 +14,12 @@
 #include <Counters.h>
 #include "stm32f4xx_hal.h"
 
+/* OS-SPECIFIC CONSTANTS */
+// Periods of tasks
+#define OS_5MS_TASK 5
+#define OS_10MS_TASK 10
+#define OS_1000MS_TASK 1000
+
 void OS_TaskHandler(void);
 
 void OS_1000ms_Task(void);

@@ -14,18 +14,15 @@
 #include "main.h"
 #include "usb_host.h"
 
-
 void CanTp_Init(void);
-void CanTp_to_PduR();
+void CanTp_PduR_SendRequest();
+
 void PduR_MainFunction();
 void PduR_Dcm_SendRequest(CanTp_Frame *request);
-// Get the DCM response
 void PduR_Dcm_GetResponse(CanTp_Frame *response);
-void PduR_to_CanTp();
+void PduR_CanTp_SendResponse();
 
-
-
-ComDia_StatusFlag CanTp_RxIndication(CanIf_StdId id, CanIf_MessageLength length, CanIf_Payload *data);
+ComDia_StatusFlag CanTp_RxIndication(CanTp_StdId id, CanTp_MessageLength length, CanTp_Payload *data);
 
 // Setati parametrii si implementati functia asta
 void CanTp_TxConfirmation(CanTp_Frame* frameCanIf);

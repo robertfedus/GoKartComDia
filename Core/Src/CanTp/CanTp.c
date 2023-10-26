@@ -13,15 +13,15 @@ CanTp_Frame CanTp_DcmFrame;
 CanTp_Frame CanTp_CanIfFrame;
 CanTp_StdId ids[3] = {0x720,//DCM id
                      0x721};//CAN IF id
-CanTp_Frame CanTp_DcmFrame_Prev;
+CanTp_Frame CanTp_DcmFramePrev;
 
 void CanTp_Init(void)
 {
-	CanTp_DcmFrame_Prev.id = 0x85; // random value
+	CanTp_DcmFramePrev.id = 0x85; // random value
 	CanTp_PduRFrame.id = -1;
 }
 
-void (*operations[])(CanTp_Frame *frame) = {PduR_Dcm_SendRequest, PduR_to_CanTp};
+void (*operations[])(CanTp_Frame *frame) = {PduR_Dcm_SendRequest, PduR_CanTp_SendResponse};
 
 ComDia_StatusFlag CanTp_RxIndication(CanTp_StdId id, CanTp_MessageLength length, CanTp_Payload *data)
 {
@@ -33,12 +33,12 @@ ComDia_StatusFlag CanTp_RxIndication(CanTp_StdId id, CanTp_MessageLength length,
 		CanTp_CanTpFrame.data[i] = data[i];
 	}
 
-	CanTp_to_PduR();
+	CanTp_PduR_SendRequest();
 
 	return COMDIA_OK;
 }
 
-void CanTp_to_PduR()
+void CanTp_PduR_SendRequest()
 {
 	CanTp_PduRFrame.id = CanTp_CanTpFrame.id;
 	CanTp_PduRFrame.length = CanTp_CanTpFrame.length;
@@ -70,17 +70,17 @@ void PduR_Dcm_SendRequest(CanTp_Frame *request)
 	uint8_t newMessage;
 	uint8_t i;
 
-	if (request->id != CanTp_DcmFrame_Prev.id
-		|| request->length != CanTp_DcmFrame_Prev.length)
+	if (request->id != CanTp_DcmFramePrev.id
+		|| request->length != CanTp_DcmFramePrev.length)
 	{
 		newMessage = 1;
 	}
-	else if (request->length == CanTp_DcmFrame_Prev.length)
+	else if (request->length == CanTp_DcmFramePrev.length)
 	{
 
 		for (i = 0; i < request->length; i++)
 		{
-				if (request->data[i] != CanTp_DcmFrame_Prev.data[i])
+				if (request->data[i] != CanTp_DcmFramePrev.data[i])
 				{
 					break;
 				}
@@ -105,8 +105,8 @@ void PduR_Dcm_SendRequest(CanTp_Frame *request)
 
 		request->id = CanTp_PduRFrame.id;
 		request->length = CanTp_PduRFrame.length;
-		CanTp_DcmFrame_Prev.id = request->id;
-		CanTp_DcmFrame_Prev.length = request->length;
+		CanTp_DcmFramePrev.id = request->id;
+		CanTp_DcmFramePrev.length = request->length;
 
 		for(i = 0; i < CAN_MAX_MESSAGE_LENGTH; i++)
 		{
@@ -115,13 +115,13 @@ void PduR_Dcm_SendRequest(CanTp_Frame *request)
 				requestMessage.data[i] = CanTp_PduRFrame.data[i];
 
 				request->data[i] = CanTp_PduRFrame.data[i];
-				CanTp_DcmFrame_Prev.data[i] = CanTp_PduRFrame.data[i];
+				CanTp_DcmFramePrev.data[i] = CanTp_PduRFrame.data[i];
 			}
 			else
 			{
 				// Restul mesajului se umple cu 0x00, pana la CAN_MAX_MESSAGE_LENGTH
 				request->data[i] = 0x00;
-				CanTp_DcmFrame_Prev.data[i] = 0x00;
+				CanTp_DcmFramePrev.data[i] = 0x00;
 			}
 		}
 
@@ -144,7 +144,7 @@ void PduR_Dcm_GetResponse(CanTp_Frame *response)
 
 }
 
-void PduR_to_CanTp()
+void PduR_CanTp_SendResponse()
 {
     CanTp_CanTpFrame.id = CanTp_PduRFrame.id;
     CanTp_CanTpFrame.length = CanTp_PduRFrame.length;
