@@ -66,7 +66,7 @@ typedef struct
 {
 	uint16_t id;
 	uint8_t dataLength;
-	uint8_t *data;
+	uint8_t data[30];
 } Dcm_DID;
 
 /* STM32 ABSTRACT TYPES */
