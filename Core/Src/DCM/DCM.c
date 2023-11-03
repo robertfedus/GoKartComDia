@@ -13,11 +13,11 @@ void Dcm_Init()
 
 	// Aici testam serviciile
 
-	uint8_t requestMessageLength = 3;
-	uint8_t requestMessageData[3] = { 0x22, 0x20, 0x10 };
+	uint8_t requestMessageLength = 5;
+	uint8_t requestMessageData[5] = { 0x2E, 0x20, 0x10, 0X27, 0X65 };
 	uint8_t responseData[8];
 	uint8_t responseDataLength;
-	Dcm_Service_ReadDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
+	Dcm_Service_WriteDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
 }
 
 //creating the response - serviceResponse -> 0x00 or NRC from the service; response -> the final response; serviceID -> id of the service;
