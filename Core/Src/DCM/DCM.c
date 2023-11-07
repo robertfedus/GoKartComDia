@@ -7,6 +7,8 @@
 
 #include <Dcm.h>
 
+volatile uint8_t Dcm_ActiveSecurityLevel = 0x00;
+
 void Dcm_Init()
 {
 	Dcm_DID_Init();
