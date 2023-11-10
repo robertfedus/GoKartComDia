@@ -12,11 +12,16 @@ volatile uint8_t Dcm_ActiveSecurityLevel = 0x00;
 void Dcm_Init()
 {
 	Dcm_DID_Init();
+	// Testing ReadDataByIdentifier
 	uint8_t requestMessageLength = 3;
 	uint8_t requestMessageData[3] = { 0x22, 0x20, 0x10 };
 	uint8_t responseData[8];
 	uint8_t responseDataLength;
 	Dcm_Service_ReadDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
+
+	// Testing SecurityAccess
+	uint8_t requestSeedMessageLength = 2;
+	uint8_t requestSeedMessageData[3] = { 0x27, 0x01 };
 }
 
 //creating the response - serviceResponse -> 0x00 or NRC from the service; response -> the final response; serviceID -> id of the service;

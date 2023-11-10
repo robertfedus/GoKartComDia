@@ -38,6 +38,7 @@
 #define OS_5MS_TASK 5
 #define OS_10MS_TASK 10
 #define OS_1000MS_TASK 1000
+#define OS_DCM_SERVICE_SECURITY_ACCESS_SEED_COUNTER_LIMIT 65000
 
 /* DCM-SPECIFIC CONSTANTS */
 // positive response definitions

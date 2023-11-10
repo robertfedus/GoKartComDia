@@ -66,7 +66,7 @@ uint8_t Dcm_Service_ReadDataByIdentifier(
 	{
 		uint8_t didHighByte = requestMessageData[currentRequestByteIndex];
 		uint8_t didLowByte = requestMessageData[currentRequestByteIndex + 1];
-		uint16_t did = ((uint16_t)didHighByte << 8) + didLowByte;
+		uint16_t did = ((uint16_t)didHighByte << 8) | didLowByte;
 
 		for (uint8_t currentDidIndex = 0; currentDidIndex < DCM_DID_COUNT; currentDidIndex++)
 		{

@@ -11,6 +11,7 @@
  extern volatile int OS_5ms_TaskCounter;
  extern volatile int OS_10ms_TaskCounter;
  extern volatile int OS_1000ms_TaskCounter;
+ extern volatile uint16_t Dcm_Service_SecurityAccess_SeedCounter;
 
 void OS_TaskHandler(void)
 {
@@ -32,6 +33,11 @@ void OS_TaskHandler(void)
 		OS_1000ms_Task();
 
 		OS_1000ms_TaskCounter = 0;
+	}
+
+	if (Dcm_Service_SecurityAccess_SeedCounter == OS_DCM_SERVICE_SECURITY_ACCESS_SEED_COUNTER_LIMIT)
+	{
+		Dcm_Service_SecurityAccess_SeedCounter = 0;
 	}
 }
 

@@ -44,6 +44,7 @@
 volatile int OS_5ms_TaskCounter = 0;
 volatile int OS_10ms_TaskCounter = 0;
 volatile int OS_1000ms_TaskCounter = 0;
+volatile uint16_t Dcm_Service_SecurityAccess_SeedCounter = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -246,6 +247,7 @@ void TIM2_IRQHandler(void)
   OS_5ms_TaskCounter++;
   OS_10ms_TaskCounter++;
   OS_1000ms_TaskCounter++;
+  Dcm_Service_SecurityAccess_SeedCounter++;
   /* USER CODE END TIM2_IRQn 1 */
 }
 
