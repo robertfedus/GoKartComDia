@@ -33,4 +33,8 @@ void Dcm_PduR_GetRequest(Dcm_Message *request);
 
 void Dcm_PduR_SendResponse(CanTp_Frame *response);
 
+/* Local tests for services */
+void Dcm_Test_ReadDataByIdentifier();
+void Dcm_Test_SecurityAccess();
+
 #endif /* INC_DCM_H_ */

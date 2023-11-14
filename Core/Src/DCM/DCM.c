@@ -15,27 +15,9 @@ extern uint16_t encryptedSeed;
 void Dcm_Init()
 {
 	Dcm_DID_Init();
-	// Testing ReadDataByIdentifier
-	uint8_t requestMessageLength = 3;
-	uint8_t requestMessageData[3] = { 0x22, 0x20, 0x10 };
-	uint8_t responseData[8];
-	uint8_t responseDataLength;
-	Dcm_Service_ReadDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
 
-	// Testing SecurityAccess
-	uint8_t requestSeedMessageLength = 2;
-	uint8_t requestSeedMessageData[3] = { 0x27, 0x01 };
-	uint8_t responseSeedData[8];
-	uint8_t responseSeedDataLength;
-	Dcm_Service_SecurityAccess(requestSeedMessageData, requestSeedMessageLength, responseSeedData, &responseSeedDataLength);
-
-	uint8_t sendKeyMessageLength;
-	uint8_t sendKeyMessageData[4] = { 0x27, 0x02, encryptedSeed >> 8, encryptedSeed & 0x00FF };
-	uint8_t sendKeyResponseData[2];
-	uint8_t sendKeyResponseDataLength;
-	Dcm_Service_SecurityAccess(sendKeyMessageData, sendKeyMessageLength, sendKeyResponseData, &sendKeyResponseDataLength);
-
-	int a;
+//	Dcm_Test_ReadDataByIdentifier();
+	Dcm_Test_SecurityAccess();
 }
 
 //creating the response - serviceResponse -> 0x00 or NRC from the service; response -> the final response; serviceID -> id of the service;
@@ -151,4 +133,49 @@ void Dcm_PduR_GetRequest(Dcm_Message *requestMessage)
 void Dcm_PduR_SendResponse(CanTp_Frame *response)
 {
 	PduR_Dcm_GetResponse(response); //sent the response to the PDUR
+}
+
+void Dcm_Test_ReadDataByIdentifier()
+{
+	// Testing ReadDataByIdentifier
+	uint8_t requestMessageLength = 3;
+	uint8_t requestMessageData[3] = { 0x22, 0x20, 0x10 };
+	uint8_t responseData[8];
+	uint8_t responseDataLength;
+	Dcm_Service_ResponseCode responseCode = Dcm_Service_ReadDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
+}
+
+void Dcm_Test_SecurityAccess()
+{
+	// Testing SecurityAccess
+	// Requesting seed for security level 1
+	uint8_t requestSeedMessageLength = 2;
+	uint8_t requestSeedMessageData[3] = { 0x27, 0x01 };
+	uint8_t responseSeedData[4];
+	uint8_t responseSeedDataLength;
+	Dcm_Service_ResponseCode responseCode1 = Dcm_Service_SecurityAccess(requestSeedMessageData, requestSeedMessageLength, responseSeedData, &responseSeedDataLength);
+
+	/* One of the two requests below must be commented out! */
+	// Sending the wrong key and obtaining an NRC
+//	uint8_t sendKeyMessageLength = 4;
+//	uint8_t sendKeyMessageData[4] = { 0x27, 0x02, 0x12, 0x34 };
+//	uint8_t sendKeyResponseData[2];
+//	uint8_t sendKeyResponseDataLength;
+//	Dcm_Service_ResponseCode responseCode2 = Dcm_Service_SecurityAccess(sendKeyMessageData, sendKeyMessageLength, sendKeyResponseData, &sendKeyResponseDataLength);
+
+	// Sending the correct key and unlocking the server
+	uint8_t sendKeyMessageLength = 4;
+	uint8_t sendKeyMessageData[4] = { 0x27, 0x02, encryptedSeed >> 8, encryptedSeed & 0x00FF };
+	uint8_t sendKeyResponseData[2];
+	uint8_t sendKeyResponseDataLength;
+	Dcm_Service_ResponseCode responseCode2 = Dcm_Service_SecurityAccess(sendKeyMessageData, sendKeyMessageLength, sendKeyResponseData, &sendKeyResponseDataLength);
+
+	// Requesting seed once again for security level 1. The server should respond with seed 0x0000
+	uint8_t requestSeedMessageLength2 = 2;
+	uint8_t requestSeedMessageData2[3] = { 0x27, 0x01 };
+	uint8_t responseSeedData2[8];
+	uint8_t responseSeedDataLength2;
+	Dcm_Service_ResponseCode responseCode3 = Dcm_Service_SecurityAccess(requestSeedMessageData2, requestSeedMessageLength2, responseSeedData2, &responseSeedDataLength2);
+
+//	int breakpointHere;
 }

@@ -14,8 +14,8 @@
 
 #define DCM_SERVICE_ID_READ_DATA_BY_IDENTIFIER_RESPONSE_SID 0x62
 
-uint8_t Dcm_Service_ReadDataByIdentifier(uint8_t *requestMessageData, uint8_t requestMessageDataLength, uint8_t *responseMessageData, uint8_t *responseMessageDataLength);
-uint8_t Dcm_Service_ReadDadaByIdentifier_RequestNrcCheck(uint8_t *requestMessageData, uint8_t requestMessageDataLength);
-uint8_t Dcm_Service_ReadDadaByIdentifier_ResponseNrcCheck(uint8_t *responseMessageData, uint8_t *responseMessageDataLength);
+Dcm_Service_ResponseCode Dcm_Service_ReadDataByIdentifier(uint8_t *requestMessageData, uint8_t requestMessageDataLength, uint8_t *responseMessageData, uint8_t *responseMessageDataLength);
+Dcm_Service_ResponseCode Dcm_Service_ReadDadaByIdentifier_RequestNrcCheck(uint8_t *requestMessageData, uint8_t requestMessageDataLength);
+Dcm_Service_ResponseCode Dcm_Service_ReadDadaByIdentifier_ResponseNrcCheck(uint8_t *responseMessageData, uint8_t *responseMessageDataLength);
 
 #endif /* INC_DCM_SERVICE_READDATABYIDENTIFIER_H_ */

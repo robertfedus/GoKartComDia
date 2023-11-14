@@ -68,6 +68,7 @@ typedef struct
 	uint8_t dataLength;
 	uint8_t data[30];
 } Dcm_DID;
+typedef uint8_t Dcm_Service_ResponseCode;
 
 /* STM32 ABSTRACT TYPES */
 

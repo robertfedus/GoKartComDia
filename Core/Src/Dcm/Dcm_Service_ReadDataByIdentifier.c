@@ -10,13 +10,12 @@ extern Dcm_DID *allDIDs[100];
 // HANDLE securityAccessDenied NRC!
 // HANDLE requestOutOfRange NRC! (partea cu sesiunea si dynamicDefinedDataIdentifier)
 // HANDLE conditionsNotCorrect NRC!
-uint8_t Dcm_Service_ReadDadaByIdentifier_RequestNrcCheck(uint8_t *requestMessageData, uint8_t requestMessageDataLength)
+Dcm_Service_ResponseCode Dcm_Service_ReadDadaByIdentifier_RequestNrcCheck(uint8_t *requestMessageData, uint8_t requestMessageDataLength)
 {
 	// 0x13 NRC
 	// incorrectMessageLengthOrInvalidFormat
 	// This NRC shall be sent if the length of the request message is invalid or the client exceeded
 	// the maximum number of dataIdentifiers allowed to be requested at a time.
-
 	if (requestMessageData[0] != DCM_SERVICE_ID_READ_DATA_BY_IDENTIFIER)
 	{
 		return DCM_SERVICE_NRC_INCORRECT_MESSAGE_LENGTH_OR_INVALID_FORMAT;
@@ -28,10 +27,10 @@ uint8_t Dcm_Service_ReadDadaByIdentifier_RequestNrcCheck(uint8_t *requestMessage
 		return DCM_SERVICE_NRC_INCORRECT_MESSAGE_LENGTH_OR_INVALID_FORMAT;
 	}
 
-	return 0x00;
+	return DCM_SERVICE_NRC_NO_ERRORS;
 }
 
-uint8_t Dcm_Service_ReadDadaByIdentifier_ResponseNrcCheck(uint8_t *responseMessageData, uint8_t *responseMessageDataLength)
+Dcm_Service_ResponseCode Dcm_Service_ReadDadaByIdentifier_ResponseNrcCheck(uint8_t *responseMessageData, uint8_t *responseMessageDataLength)
 {
 	// 0x14 NRC
 	// responseTooLong
@@ -42,10 +41,10 @@ uint8_t Dcm_Service_ReadDadaByIdentifier_ResponseNrcCheck(uint8_t *responseMessa
 		return DCM_SERVICE_NRC_RESPONSE_TOO_LONG;
 	}
 
-	return 0x00;
+	return DCM_SERVICE_NRC_NO_ERRORS;
 }
 
-uint8_t Dcm_Service_ReadDataByIdentifier(
+Dcm_Service_ResponseCode Dcm_Service_ReadDataByIdentifier(
 		uint8_t *requestMessageData,
 		uint8_t requestMessageDataLength,
 		uint8_t *responseMessageData,
@@ -53,7 +52,7 @@ uint8_t Dcm_Service_ReadDataByIdentifier(
 {
 	uint8_t requestNRC = Dcm_Service_ReadDadaByIdentifier_RequestNrcCheck(requestMessageData, requestMessageDataLength);
 
-	if (requestNRC != 0x00)
+	if (requestNRC != DCM_SERVICE_NRC_NO_ERRORS)
 	{
 		return requestNRC;
 	}
@@ -106,5 +105,5 @@ uint8_t Dcm_Service_ReadDataByIdentifier(
 		return responseNRC;
 	}
 
-    return 0x00;
+    return DCM_SERVICE_NRC_NO_ERRORS;
 }
