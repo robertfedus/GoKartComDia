@@ -44,7 +44,8 @@
 volatile int OS_5ms_TaskCounter = 0;
 volatile int OS_10ms_TaskCounter = 0;
 volatile int OS_1000ms_TaskCounter = 0;
-volatile uint16_t Dcm_Service_SecurityAccess_SeedCounter = 0;
+// Dcm_Service_SecurityAccess_SeedCounter takes a random value above the 8-bit limit
+volatile uint16_t Dcm_Service_SecurityAccess_SeedCounter = 705;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

@@ -9,6 +9,7 @@
 extern uint16_t Dcm_Service_SecurityAccess_SeedCounter;
 extern uint8_t Dcm_ActiveSecurityLevel;
 uint16_t requestedSeed = 0x00;
+uint16_t requestedSeedCounter = 0x00;
 uint16_t encryptedSeed = 0x00;
 uint8_t requestedSecurityLevel = 0x00;
 uint8_t serviceState = IDLE;
@@ -31,8 +32,10 @@ uint8_t Dcm_Service_SecurityAccess(uint8_t *requestMessageData, uint8_t requestM
 		}
 
 		requestedSecurityLevel = requestMessageData[1];
+
+		requestedSeedCounter = Dcm_Service_SecurityAccess_SeedCounter;
 		// The requestedSeed is sent back to the client
-		requestedSeed = Dcm_Service_SecurityAccess_SeedCounter;
+		requestedSeed = requestedSeedCounter + requestedSecurityLevel;
 		// We encrypt the seed to check it against the received SecurityAccess key
 		encryptedSeed = Dcm_Service_SecurityAccess_EncryptSeed(requestedSeed);
 
@@ -53,7 +56,11 @@ uint8_t Dcm_Service_SecurityAccess(uint8_t *requestMessageData, uint8_t requestM
 		uint8_t keyLowByte = requestMessageData[3];
 		uint16_t key = ((uint16_t)keyHighByte << 8) | keyLowByte;
 
-		if (key != encryptedSeed)
+		// In order to grant access to the requested security level, the key must:
+		// match the encrypted seed calculated internally on this server,
+		// be decrypted and checked against the initially requested security level
+		uint16_t keySecurityLevel = Dcm_Service_SecurityAccess_DecryptKey(key) - requestedSeedCounter;
+		if (key != encryptedSeed || keySecurityLevel != requestedSecurityLevel)
 		{
 			// HANDLE NRC
 		}
@@ -63,6 +70,7 @@ uint8_t Dcm_Service_SecurityAccess(uint8_t *requestMessageData, uint8_t requestM
 		serviceState = IDLE;
 		requestedSeed = 0x00;
 		encryptedSeed = 0x00;
+		requestedSeedCounter = 0x00;
 		requestedSecurityLevel = 0x00;
 	}
 
@@ -74,5 +82,10 @@ uint8_t Dcm_Service_SecurityAccess(uint8_t *requestMessageData, uint8_t requestM
 uint16_t Dcm_Service_SecurityAccess_EncryptSeed(uint16_t seed)
 {
     return seed ^ ENCRYPTION_KEY;
+}
+
+uint16_t Dcm_Service_SecurityAccess_DecryptKey(uint16_t key)
+{
+    return key ^ ENCRYPTION_KEY;
 }
 

@@ -9,6 +9,9 @@
 
 volatile uint8_t Dcm_ActiveSecurityLevel = 0x00;
 
+// The encryptedSeed is present here for testing purposes. It will be used as the key of the sendKey sub-function
+extern uint16_t encryptedSeed;
+
 void Dcm_Init()
 {
 	Dcm_DID_Init();
@@ -22,6 +25,17 @@ void Dcm_Init()
 	// Testing SecurityAccess
 	uint8_t requestSeedMessageLength = 2;
 	uint8_t requestSeedMessageData[3] = { 0x27, 0x01 };
+	uint8_t responseSeedData[8];
+	uint8_t responseSeedDataLength;
+	Dcm_Service_SecurityAccess(requestSeedMessageData, requestSeedMessageLength, responseSeedData, &responseSeedDataLength);
+
+	uint8_t sendKeyMessageLength;
+	uint8_t sendKeyMessageData[4] = { 0x27, 0x02, encryptedSeed >> 8, encryptedSeed & 0x00FF };
+	uint8_t sendKeyResponseData[2];
+	uint8_t sendKeyResponseDataLength;
+	Dcm_Service_SecurityAccess(sendKeyMessageData, sendKeyMessageLength, sendKeyResponseData, &sendKeyResponseDataLength);
+
+	int a;
 }
 
 //creating the response - serviceResponse -> 0x00 or NRC from the service; response -> the final response; serviceID -> id of the service;
