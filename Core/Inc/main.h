@@ -199,10 +199,13 @@ void Error_Handler(void);
 #define B3_GPIO_Port GPIOG
 #define B4_Pin GPIO_PIN_12
 #define B4_GPIO_Port GPIOG
+<<<<<<< Updated upstream
 #define LD3_Pin GPIO_PIN_13
 #define LD3_GPIO_Port GPIOG
 #define LD4_Pin GPIO_PIN_14
 #define LD4_GPIO_Port GPIOG
+=======
+>>>>>>> Stashed changes
 #define SDNCAS_Pin GPIO_PIN_15
 #define SDNCAS_GPIO_Port GPIOG
 #define SDCKE1_Pin GPIO_PIN_5

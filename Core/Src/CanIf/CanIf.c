@@ -13,6 +13,19 @@ void CanIf_MainFunction(void)
 	// Loop to transmit messages at 1-second intervals
 	for(;;)
 	{
+<<<<<<< Updated upstream
+=======
+	// StdId for the transmitted message
+	messageStdId = CAN_DCM_STDID;
+	// Transmitted message length
+	messageLength = 2;
+	// Transmitted payload
+	 Can_TxData[0] = 0x10;
+	 Can_TxData[1] = 0x03;
+	 step++;
+	}
+	else {
+>>>>>>> Stashed changes
 		// StdId for the transmitted message
 		Can_StdId messageStdId = CAN_DCM_STDID;
 		// Transmitted message length

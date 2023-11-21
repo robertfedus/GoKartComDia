@@ -55,6 +55,14 @@ typedef struct
 } CanTp_Frame;
 
 
+typedef struct
+{
+	uint16_t id;
+	uint8_t statusMask;
+	uint8_t dataLength;
+	uint8_t *snapData;
+}Dcm_DTC;
+
 /* STM32 ABSTRACT TYPES */
 
 // CAN Controller Instance
