@@ -11,13 +11,17 @@ void Dcm_Init()
 {
 	Dcm_DID_Init();
 
+	//Dcm_RoutineControlTable_Init();
 	// Aici testam serviciile
 
-	uint8_t requestMessageLength = 3;
-	uint8_t requestMessageData[3] = { 0x22, 0x20, 0x10 };
+	//uint8_t requestMessageLength = 3;
+	//uint8_t requestMessageData[3] = { 0x22, 0x20, 0x10 };
+	uint8_t requestMessageLength = 5;
+    uint8_t requestMessageData[5] = { 0x31, 0x01, 0x00, 0x03, 0xff };
 	uint8_t responseData[8];
 	uint8_t responseDataLength;
-	Dcm_Service_ReadDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
+	Dcm_Service_RoutineControl(requestMessageData, requestMessageLength, responseData, &responseDataLength);
+	//Dcm_Service_ReadDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
 }
 
 //creating the response - serviceResponse -> 0x00 or NRC from the service; response -> the final response; serviceID -> id of the service;
