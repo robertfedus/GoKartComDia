@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include <CanIf.h>
 #include <OS.h>
+#include <Eeprom.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -33,7 +34,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+uint16_t VirtAddVarTab[NB_OF_VAR] = {0x5555, 0x6666, 0x7777};
+uint16_t VarDataTab[NB_OF_VAR] = {0, 0, 0};
+uint16_t VarValue,VarDataTmp = 0;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -108,6 +111,39 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  HAL_FLASH_Unlock();
+
+  /* EEPROM Init */
+   if( EE_Init() != EE_OK)
+   {
+     Error_Handler();
+   }
+
+//   uint16_t var1Write = 0x22;
+//   uint16_t var2Write = 0x23;
+//
+//	if((EE_WriteVariable(VirtAddVarTab[1],  var1Write)) != HAL_OK)
+//	{
+//		Error_Handler();
+//	}
+//
+//	if((EE_WriteVariable(VirtAddVarTab[2],  var2Write)) != HAL_OK)
+//	{
+//		Error_Handler();
+//	}
+
+	uint16_t var1Read;
+	uint16_t var2Read;
+
+	if(EE_ReadVariable(VirtAddVarTab[1], &var1Read) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if(EE_ReadVariable(VirtAddVarTab[2], &var2Read) != HAL_OK)
+	{
+		Error_Handler();
+	}
 
   /* USER CODE END SysInit */
 
