@@ -9,6 +9,11 @@
 #define INC_DCM_SERVICE_WRITEMEMORYBYADDRESS_H_
 
 #include <stdint.h>
+#include <Constants.h>
+#include <Types.h>
+
+#define DCM_SERVICE_ID_WRITE_MEMORY_BY_ADDRESS_RESPONSE_SID 0x7D
+#define NEGATIVE_RESPONSE_SID 0x7F
 
 uint8_t Dcm_Service_WriteMemoryByAddress(uint8_t *requestMessageData, uint8_t requestMessageLength, uint8_t *responseData, uint8_t *responseDataLength);
 
