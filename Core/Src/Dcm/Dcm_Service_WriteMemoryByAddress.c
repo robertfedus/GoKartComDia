@@ -6,8 +6,11 @@
  */
 #include <Dcm_Service_WriteMemoryByAddress.h>
 
+
 uint8_t Dcm_Service_WriteMemoryByAddress(uint8_t *requestMessageData, uint8_t requestMessageLength, uint8_t *responseData, uint8_t *responseDataLength)
 {
+	uint8_t dataRecord[3];
+
 	if (requestMessageData[0] != DCM_SERVICE_ID_WRITE_MEMORY_BY_ADDRESS)
 			{
 				return 0x00;
@@ -25,11 +28,7 @@ uint8_t Dcm_Service_WriteMemoryByAddress(uint8_t *requestMessageData, uint8_t re
 
     for(uint8_t DataIndex = 0; DataIndex < memorySize; DataIndex++){
 
-		uint8_t Data = requestMessageData[requestDataIndex+DataIndex];
-
-		//SCRIEREA IN MEMORIE
-
-        memoryAddress = memoryAddress + 1;
+		dataRecord[DataIndex] = requestMessageData[requestDataIndex+DataIndex];
 
 	}
 
