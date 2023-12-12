@@ -119,18 +119,18 @@ int main(void)
      Error_Handler();
    }
 
-//   uint16_t var1Write = 0x22;
-//   uint16_t var2Write = 0x23;
-//
-//	if((EE_WriteVariable(VirtAddVarTab[1],  var1Write)) != HAL_OK)
-//	{
-//		Error_Handler();
-//	}
-//
-//	if((EE_WriteVariable(VirtAddVarTab[2],  var2Write)) != HAL_OK)
-//	{
-//		Error_Handler();
-//	}
+   uint16_t var1Write = 0x22;
+   uint16_t var2Write = 0x23;
+
+	if((EE_WriteVariable(VirtAddVarTab[1],  var1Write)) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if((EE_WriteVariable(VirtAddVarTab[2],  var2Write)) != HAL_OK)
+	{
+		Error_Handler();
+	}
 
 	uint16_t var1Read;
 	uint16_t var2Read;
