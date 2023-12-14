@@ -6,22 +6,47 @@
  */
 
 #include <Dcm.h>
+void Dcm_RoutineControlTable_Init()
+{
+    routineControlTable.StartRoutine[0]=routine1;
+    routineControlTable.StartRoutine[1]=routine2;
+    routineControlTable.StartRoutine[2]=routine3;
+
+    routineControlTable.StopRoutine[0]=routine1;
+    routineControlTable.StopRoutine[1]=routine2;
+    routineControlTable.StopRoutine[2]=routine3;
+
+    routineControlTable.RequestRoutineResults[0]=routine1;
+    routineControlTable.RequestRoutineResults[1]=routine2;
+    routineControlTable.RequestRoutineResults[2]=routine3;
+}
 
 void Dcm_Init()
 {
-	Dcm_DID_Init();
+		Dcm_RoutineControlTable_Init();
 
-	//Dcm_RoutineControlTable_Init();
-	// Aici testam serviciile
+		// Aici testam serviciile
 
-	//uint8_t requestMessageLength = 3;
-	//uint8_t requestMessageData[3] = { 0x22, 0x20, 0x10 };
-	uint8_t requestMessageLength = 5;
-    uint8_t requestMessageData[5] = { 0x31, 0x01, 0x00, 0x03, 0xff };
-	uint8_t responseData[8];
-	uint8_t responseDataLength;
-	Dcm_Service_RoutineControl(requestMessageData, requestMessageLength, responseData, &responseDataLength);
-	//Dcm_Service_ReadDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
+	//	uint8_t requestMessageLength = 5;
+	//	uint8_t requestMessageData[5] = { 0x2E, 0x20, 0x10, 0X27, 0X65 };
+	//	uint8_t responseData[8];
+	//	uint8_t responseDataLength;
+	//	Dcm_Service_WriteDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
+
+		uint8_t requestMessageLength1 = 5, requestMessageLength2 = 6;
+		uint8_t requestMessageData1[5] = { 0x31, 0x01, 0x00, 0x03, 0x65 }, requestMessageData2[5] = { 0x23, 0x12, 0x99, 0x99, 0x01 };
+		uint8_t responseData1[8], responseData2[8];
+		uint8_t responseDataLength1, responseDataLength2;
+		uint8_t testResponseRC, testResponseRMBA;
+		testResponseRC = Dcm_Service_RoutineControl(requestMessageData1, requestMessageLength1, responseData1, &responseDataLength1);
+		HAL_FLASH_Unlock();
+		if((EE_WriteVariable(0x9999,  0x1234)) != HAL_OK)
+		{
+			Error_Handler();
+		}
+
+		testResponseRMBA = Dcm_Service_ReadMemoryByAddress(requestMessageData2, requestMessageLength2, responseData2, &responseDataLength2);
+
 }
 
 //creating the response - serviceResponse -> 0x00 or NRC from the service; response -> the final response; serviceID -> id of the service;

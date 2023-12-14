@@ -52,20 +52,6 @@ typedef struct
 }RoutineControlTable;
 RoutineControlTable routineControlTable;
 
-void Dcm_RoutineControlTable_Init()
-{
-    routineControlTable.StartRoutine[0]=routine1;
-    routineControlTable.StartRoutine[1]=routine2;
-    routineControlTable.StartRoutine[2]=routine3;
-
-    routineControlTable.StopRoutine[0]=routine1;
-    routineControlTable.StopRoutine[1]=routine2;
-    routineControlTable.StopRoutine[2]=routine3;
-
-    routineControlTable.RequestRoutineResults[0]=routine1;
-    routineControlTable.RequestRoutineResults[1]=routine2;
-    routineControlTable.RequestRoutineResults[2]=routine3;
-}
 
 uint16_t routineIds[3]={0x01,0x02,0x03}; //routine IDs
 uint16_t routineStatus[3]={ROUTINE_NEVER_ACTIVE,ROUTINE_NEVER_ACTIVE,ROUTINE_NEVER_ACTIVE}; //routineStatus[0] - prima rutina
