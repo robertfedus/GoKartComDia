@@ -4,35 +4,28 @@
  *  Created on: Oct 24, 2023
  *      Author: FER3CLJ
  */
-#include <Dcm_Service_ReadMemoryByAddress.h>
-#include <stdint.h>
 #include <Eeprom.h>
+#include <Dcm_Service_ReadMemoryByAddress.h>
+#include <Constants.h>
 
-#define DCM_SERVICE_ID_RMBA 0x23
-
-#define REQUEST_OUT_OF_RANGE 0x31
-#define CONDITIONS_NOT_CORRECT 0x22
-#define INCORRECT_MESSAGE_LENGTH_OR_INVALID_FORMAT 0x13
-#define SECURITY_ACCESS_DENIED 0x33
 
 
 uint8_t Dcm_Service_ReadMemoryByAddress(uint8_t *requestMessageData, uint8_t requestMessageLength, uint8_t *responseData, uint8_t *responseDataLength)
 {
 	if (requestMessageLength < 3 || requestMessageLength > 8)
-		return INCORRECT_MESSAGE_LENGTH_OR_INVALID_FORMAT;
+		return DCM_NRC_INCORRECT_MESSAGE_LENGTH_OR_INVALID_FORMAT;
 
-    //implementation
 	uint8_t addressAndLengthFormatIdentifier, memorySizeLength, memoryAddressLength;
 	/*
 	    bits 0-3 of addressAndLengthFormatIdentifier=length in bytes of memoryAddress
 	    bits 4-7 of addressAndLengthFormatIdentifier=length in bytes of memorySize
 	*/
 	addressAndLengthFormatIdentifier = requestMessageData[1];
-	memoryAddressLength = addressAndLengthFormatIdentifier & 0x0f; //get low nibble of addressAndLengthFormatIdentifier
-	memorySizeLength = addressAndLengthFormatIdentifier >> 4; //get high nibble of addressAndLengthFormatIdentifier
+	memoryAddressLength = addressAndLengthFormatIdentifier & 0x0f;
+	memorySizeLength = addressAndLengthFormatIdentifier >> 4;
 
 	if((memoryAddressLength > 6) || (memoryAddressLength < 1) || (memorySizeLength == 0) || (memorySizeLength > 7))
-		return REQUEST_OUT_OF_RANGE;
+		return DCM_NRC_REQUEST_OUT_OF_RANGE;
 
 	uint8_t memoryAddressArray[memoryAddressLength];
 	for(int i=0;i<memoryAddressLength;i++)
@@ -47,14 +40,15 @@ uint8_t Dcm_Service_ReadMemoryByAddress(uint8_t *requestMessageData, uint8_t req
 	}
 
 	*responseDataLength = memorySizeLength + 1;
-	responseData[0] = DCM_SERVICE_ID_RMBA + 0x40;
+	responseData[0] = DCM_SERVICE_ID_READ_MEMORY_BY_ADDRESS;
 
 
-	uint8_t dataRecord[7], varRead;
+	uint8_t dataRecord[7];
+	uint16_t varRead;
 	for(int i=0 ; i<memorySizeLength ; i++)
 	{
 		HAL_FLASH_Unlock();
-		if(EE_ReadVariable(memoryAddress, (uint16_t)&varRead))
+		if(EE_ReadVariable(memoryAddress, &varRead))
 		{
 			Error_Handler();
 		}
@@ -66,5 +60,5 @@ uint8_t Dcm_Service_ReadMemoryByAddress(uint8_t *requestMessageData, uint8_t req
 	for(int i=0 ; i<memorySizeLength ; i++)
 		responseData[i+1] = dataRecord[i];
 
-    return 0x00;
+    return DCM_POSITIVE_RESPONSE;
 }

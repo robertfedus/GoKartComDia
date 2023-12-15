@@ -6,8 +6,50 @@
  */
 #include <Dcm_Service_WriteDataByidentifier.h>
 
+extern Dcm_DID *allDIDs[100];
+
 uint8_t Dcm_Service_WriteDataByIdentifier(uint8_t *requestMessageData, uint8_t requestMessageLength, uint8_t *responseData, uint8_t *responseDataLength)
 {
-    //implementation
+	if (requestMessageData[0] != DCM_SERVICE_ID_WRITE_DATA_BY_IDENTIFIER)
+		{
+			return 0x00;
+		}
+
+    if(requestMessageLength < 4){
+    	responseData[0] = NEGATIVE_RESPONSE_SID;
+    	responseData[1] = 0x13;
+
+    	return 0x00;
+
+    }
+
+	uint8_t responseDataIndex = 0;
+    responseData[responseDataIndex++] = DCM_SERVICE_ID_WRITE_DATA_BY_IDENTIFIER_RESPONSE_SID;
+
+    uint8_t requestDataIndex = 1;
+    uint8_t didHighByte = requestMessageData[requestDataIndex++];
+    uint8_t didLowByte = requestMessageData[requestDataIndex++];
+    uint16_t did = ((uint16_t)didHighByte << 8) + didLowByte;
+
+    for (uint8_t currentDidIndex = 0; currentDidIndex < DCM_DID_COUNT; currentDidIndex++){
+
+    	Dcm_DID *currentDid = allDIDs[currentDidIndex];
+
+    	if (allDIDs[currentDidIndex]->id == did){
+    		responseData[responseDataIndex++] = didHighByte;
+    		responseData[responseDataIndex++] = didLowByte;
+
+    		for (uint8_t currentDidDataIndex = 0; currentDidDataIndex <= requestMessageLength-requestDataIndex; currentDidDataIndex++){
+
+    				currentDid->data[currentDidDataIndex] = requestMessageData[requestDataIndex++];
+    		}
+
+    	}
+
+    }
+
+    			*responseDataLength = responseDataIndex;
+
+
     return 0x00;
 }
