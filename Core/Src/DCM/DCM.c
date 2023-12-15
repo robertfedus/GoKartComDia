@@ -6,20 +6,8 @@
  */
 
 #include <Dcm.h>
-void Dcm_RoutineControlTable_Init()
-{
-    routineControlTable.StartRoutine[0]=routine1;
-    routineControlTable.StartRoutine[1]=routine2;
-    routineControlTable.StartRoutine[2]=routine3;
+#include <Dcm_Service_RoutineControl.h>
 
-    routineControlTable.StopRoutine[0]=routine1;
-    routineControlTable.StopRoutine[1]=routine2;
-    routineControlTable.StopRoutine[2]=routine3;
-
-    routineControlTable.RequestRoutineResults[0]=routine1;
-    routineControlTable.RequestRoutineResults[1]=routine2;
-    routineControlTable.RequestRoutineResults[2]=routine3;
-}
 
 void Dcm_Init()
 {

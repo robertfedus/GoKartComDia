@@ -6,27 +6,6 @@
  */
 #include <Dcm_Service_RoutineControl.h>
 
-//BEGIN
-#define DCM_SERVICE_ID_ROUTINE_CONTROL 0x31
-
-
-//SUBFUNCTIONS
-#define START_ROUTINE 0x01
-#define STOP_ROUTINE 0x02
-#define REQUEST_ROUTINE_RESULTS 0x03
-
-//NRCs (fara securityAccessDenied si conditionsNotCorrect)
-#define SUBFUNCTION_NOT_SUPPORTED 0x12
-#define INCORRECT_MESSAGE_LENGTH_OR_INVALID_FORMAT 0x13
-#define REQUEST_SEQUENCE_ERROR 0x24
-#define REQUEST_OUT_OF_RANGE 0x31
-
-//for checking the current status of a routine
-#define ROUTINE_ACTIVE 0x01
-#define ROUTINE_NOT_ACTIVE 0x02
-#define ROUTINE_NEVER_ACTIVE 0x03
-
-#define NUMBER_OF_ROUTINE_IDENTIFIERS 3
 
 //for testing routineControl
 void routine1(uint8_t* output, uint8_t changeStatus, uint8_t* routineControlRecord)
@@ -43,18 +22,22 @@ void routine3(uint8_t* output, uint8_t changeStatus, uint8_t* routineControlReco
     output[6]=200;
 }
 
-typedef struct
+
+
+void Dcm_RoutineControlTable_Init()
 {
-	uint16_t routineId;
-	void (*StartRoutine[3])(uint8_t* output, uint8_t changeStatus, uint8_t* routineControlRecord);
-	void (*StopRoutine[3])(uint8_t* output, uint8_t changeStatus, uint8_t* routineControlRecord);
-	void (*RequestRoutineResults[3])(uint8_t* output, uint8_t changeStatus, uint8_t* routineControlRecord);
-}RoutineControlTable;
-RoutineControlTable routineControlTable;
+    routineControlTable.StartRoutine[0]=routine1;
+    routineControlTable.StartRoutine[1]=routine2;
+    routineControlTable.StartRoutine[2]=routine3;
 
+    routineControlTable.StopRoutine[0]=routine1;
+    routineControlTable.StopRoutine[1]=routine2;
+    routineControlTable.StopRoutine[2]=routine3;
 
-uint16_t routineIds[3]={0x01,0x02,0x03}; //routine IDs
-uint16_t routineStatus[3]={ROUTINE_NEVER_ACTIVE,ROUTINE_NEVER_ACTIVE,ROUTINE_NEVER_ACTIVE}; //routineStatus[0] - prima rutina
+    routineControlTable.RequestRoutineResults[0]=routine1;
+    routineControlTable.RequestRoutineResults[1]=routine2;
+    routineControlTable.RequestRoutineResults[2]=routine3;
+}
 
 //END
 
