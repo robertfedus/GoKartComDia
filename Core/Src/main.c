@@ -111,26 +111,26 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  HAL_FLASH_Unlock();
 
+	HAL_FLASH_Unlock();
   /* EEPROM Init */
-   if( EE_Init() != EE_OK)
-   {
-     Error_Handler();
-   }
-
-   uint16_t var1Write = 0x22;
-   uint16_t var2Write = 0x23;
-
-	if((EE_WriteVariable(VirtAddVarTab[1],  var1Write)) != HAL_OK)
-	{
-		Error_Handler();
-	}
-
-	if((EE_WriteVariable(VirtAddVarTab[2],  var2Write)) != HAL_OK)
-	{
-		Error_Handler();
-	}
+//  if( EE_Init() != EE_OK)
+//  {
+//	Error_Handler();
+//  }
+////
+//   uint16_t var1Write = 0x22;
+//   uint16_t var2Write = 0x23;
+//
+//	if((EE_WriteVariable(VirtAddVarTab[1],  var1Write)) != HAL_OK)
+//	{
+//		Error_Handler();
+//	}
+//
+//	if((EE_WriteVariable(VirtAddVarTab[2],  var2Write)) != HAL_OK)
+//	{
+//		Error_Handler();
+//	}
 
 
 
@@ -150,10 +150,10 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   if (HAL_TIM_Base_Start_IT(&htim2) != HAL_OK)
-      {
-        /* Starting Error */
-        Error_Handler();
-      }
+  {
+	/* Starting Error */
+	Error_Handler();
+  }
   // int main se va curata la final; poate se mai configureaza intreruperi
 //  if (COMDIA_APP_STAGE == COMDIA_TEST_STAGE)
 //  {

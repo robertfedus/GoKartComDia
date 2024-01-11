@@ -22,9 +22,9 @@ uint8_t Dcm_Service_WriteMemoryByAddress(uint8_t *requestMessageData, uint8_t re
 		uint16_t data = requestMessageData[requestDataIndex + dataIndex];
 
 		if((EE_WriteVariable(memoryAddress,  data)) != HAL_OK)
-			{
-				Error_Handler();
-			}
+		{
+			Error_Handler();
+		}
 
 		memoryAddress++;
 	}

@@ -7,6 +7,7 @@
 
 #include <Dcm.h>
 #include <Dcm_Service_RoutineControl.h>
+#include <Eeprom.h>
 
 
 void Dcm_Init()
@@ -28,8 +29,35 @@ void Dcm_Init()
 		uint8_t responseDataLength1, responseDataLength2;
 		uint8_t testResponseRC, testResponseRMBA;
 		testResponseRC = Dcm_Service_RoutineControl(requestMessageData1, requestMessageLength1, responseData1, &responseDataLength1);
-		HAL_FLASH_Unlock();
-		if((EE_WriteVariable(0x9999,  0x1234)) != HAL_OK)
+
+//		HAL_FLASH_Unlock();
+//		/* EEPROM Init */
+//		if( EE_Init() != EE_OK)
+//		{
+//		  Error_Handler();
+//		}
+		if( EE_Init() != EE_OK)
+		  {
+			Error_Handler();
+		  }
+
+//	    uint16_t var1Write = 0x22;
+//	    uint16_t var2Write = 0x23;
+
+//		if((EE_WriteVariable(0x7777,  var1Write)) != HAL_OK)
+//		{
+//			Error_Handler();
+//		}
+//
+//		if((EE_WriteVariable(0x8888,  var2Write)) != HAL_OK)
+//		{
+//			Error_Handler();
+//		}
+		if((EE_WriteVariable(0x1111,  0x1234)) != HAL_OK)
+		{
+			Error_Handler();
+		}
+		if((EE_WriteVariable(0x1112,  0x1234)) != HAL_OK)
 		{
 			Error_Handler();
 		}
