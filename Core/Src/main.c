@@ -34,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-uint16_t VirtAddVarTab[NB_OF_VAR] = {0x5555, 0x6666, 0x7777};
+uint16_t VirtAddVarTab[NB_OF_VAR] = {0x0001, 0x0002, 0x0003};
 uint16_t VarDataTab[NB_OF_VAR] = {0, 0, 0};
 uint16_t VarValue,VarDataTmp = 0;
 /* USER CODE END PD */
@@ -132,18 +132,7 @@ int main(void)
 		Error_Handler();
 	}
 
-	uint16_t var1Read;
-	uint16_t var2Read;
 
-	if(EE_ReadVariable(VirtAddVarTab[1], &var1Read) != HAL_OK)
-	{
-		Error_Handler();
-	}
-
-	if(EE_ReadVariable(VirtAddVarTab[2], &var2Read) != HAL_OK)
-	{
-		Error_Handler();
-	}
 
   /* USER CODE END SysInit */
 

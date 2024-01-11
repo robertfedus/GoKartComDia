@@ -1,9 +1,10 @@
 /*
  * Eeprom.c
  *
- *  Created on: Dec 15, 2023
+ *  Created on: Dec 19, 2023
  *      Author: GOS2CLJ
  */
+
 
 /**
   ******************************************************************************
@@ -569,11 +570,11 @@ static uint16_t EE_VerifyPageFullWriteVariable(uint16_t VirtAddress, uint16_t Da
   }
 
   /* Get the valid Page start Address */
-  Address = (uint32_t)(EEPROM_START_ADDRESS + (uint32_t)(ValidPage * PAGE_SIZE));
-
+  //Address = (uint32_t)(EEPROM_START_ADDRESS + (uint32_t)(ValidPage * PAGE_SIZE)); //in loc de 0x00 e ValidPage
+  Address = (uint32_t)(EEPROM_START_ADDRESS + (uint32_t)(0x00 * PAGE_SIZE));
   /* Get the valid Page end Address */
-  PageEndAddress = (uint32_t)((EEPROM_START_ADDRESS - 1) + (uint32_t)((ValidPage + 1) * PAGE_SIZE));
-
+  PageEndAddress = (uint32_t)((EEPROM_START_ADDRESS - 1) + (uint32_t)(0x01 * PAGE_SIZE)); //in loc de 0x01 e (ValidPage + 1)
+  //PageEndAddress = (uint32_t)((EEPROM_START_ADDRESS - 1) + (uint32_t)((ValidPage + 1) * PAGE_SIZE));
   /* Check each active page address starting from beginning */
   while (Address < PageEndAddress)
   {

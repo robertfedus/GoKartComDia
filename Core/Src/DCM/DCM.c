@@ -12,6 +12,7 @@
 void Dcm_Init()
 {
 		Dcm_RoutineControlTable_Init();
+		Dcm_DID_Init();
 
 		// Aici testam serviciile
 
