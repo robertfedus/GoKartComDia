@@ -24,7 +24,7 @@ void Dcm_Init()
 	//	Dcm_Service_WriteDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
 
 		uint8_t requestMessageLength1 = 5, requestMessageLength2 = 6;
-		uint8_t requestMessageData1[5] = { 0x31, 0x01, 0x00, 0x03, 0x65 }, requestMessageData2[5] = { 0x23, 0x12, 0x99, 0x99, 0x01 };
+		uint8_t requestMessageData1[5] = { 0x31, 0x01, 0x00, 0x03, 0x65 }, requestMessageData2[5] = { 0x23, 0x12, 0x11, 0x11, 0x01 };
 		uint8_t responseData1[8], responseData2[8];
 		uint8_t responseDataLength1, responseDataLength2;
 		uint8_t testResponseRC, testResponseRMBA;

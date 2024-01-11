@@ -47,12 +47,11 @@ uint8_t Dcm_Service_ReadMemoryByAddress(uint8_t *requestMessageData, uint8_t req
 	uint16_t varRead;
 	for(int i=0 ; i<memorySizeLength ; i++)
 	{
-		HAL_FLASH_Unlock();
+		//HAL_FLASH_Unlock();
 		if(EE_ReadVariable(memoryAddress, &varRead))
 		{
 			Error_Handler();
 		}
-		HAL_FLASH_Lock();
 		dataRecord[i] = (uint8_t)varRead;
 		memoryAddress++;
 	}
