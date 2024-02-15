@@ -23,6 +23,7 @@ uint8_t Dcm_Service_WriteMemoryByAddress(uint8_t *requestMessageData, uint8_t re
 	            {
 	                responseData[0] = NEGATIVE_RESPONSE_SID;
 	    	        responseData[1] = 0x13;
+	    	        *responseDataLength = 2;
 
 	    	            return 0x00;
 	            }
@@ -50,6 +51,8 @@ uint8_t Dcm_Service_WriteMemoryByAddress(uint8_t *requestMessageData, uint8_t re
 		{
 		    responseData[0] = NEGATIVE_RESPONSE_SID;
 	    	responseData[1] = 0x31;
+	    	*responseDataLength = 2;
+
 
 	    	    return 0x00;
 		}

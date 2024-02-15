@@ -18,9 +18,10 @@ uint8_t Dcm_Service_WriteDataByIdentifier(uint8_t *requestMessageData, uint8_t r
 
 	//NRC 0X13
 	//the length of the message is wrong
-	if((requestMessageLength < 4) || (requestMessageLength > 8)){
+	if(requestMessageLength < 4){
 	    	responseData[0] = NEGATIVE_RESPONSE_SID;
 	    	responseData[1] = 0x13;
+	    	*responseDataLength = 2;
 
 	    	return 0x00;
 
@@ -28,7 +29,7 @@ uint8_t Dcm_Service_WriteDataByIdentifier(uint8_t *requestMessageData, uint8_t r
 
 	//create positive response
 	uint8_t responseDataIndex = 0;
-    responseData[responseDataIndex++] = DCM_SERVICE_ID_WRITE_DATA_BY_IDENTIFIER_RESPONSE_SID;
+	responseData[responseDataIndex++] = DCM_SERVICE_ID_WRITE_DATA_BY_IDENTIFIER_RESPONSE_SID;
 
     uint8_t requestDataIndex = 1;
 
@@ -42,8 +43,21 @@ uint8_t Dcm_Service_WriteDataByIdentifier(uint8_t *requestMessageData, uint8_t r
     	Dcm_DID *currentDid = allDIDs[currentDidIndex];
 
     	if (allDIDs[currentDidIndex]->id == did){
-    		responseData[responseDataIndex++] = didHighByte;
-    		responseData[responseDataIndex++] = didLowByte;
+
+    		//NRC 0X13
+    		//the length of the message is wrong
+    		if((requestMessageLength > (currentDid->dataLength + 3))||(requestMessageLength < (currentDid->dataLength + 3))){
+    		    	responseData[0] = NEGATIVE_RESPONSE_SID;
+    		    	responseData[1] = 0x13;
+    		    	*responseDataLength = 2;
+
+    		    	return 0x00;
+
+    		    }
+
+    			responseData[responseDataIndex++] = didHighByte;
+    			responseData[responseDataIndex++] = didLowByte;
+
 
     		for (uint8_t currentDidDataIndex = 0; currentDidDataIndex <= requestMessageLength-requestDataIndex; currentDidDataIndex++){
 
