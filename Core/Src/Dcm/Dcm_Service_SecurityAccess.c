@@ -5,9 +5,9 @@
  *      Author: FER3CLJ
  */
 #include <Dcm_Service_SecurityAccess.h>
+#include <Globals.h>
 
 extern uint16_t Dcm_Service_SecurityAccess_SeedCounter;
-extern uint8_t Dcm_ActiveSecurityLevel;
 uint16_t requestedSeed = 0x00;
 uint16_t requestedSeedCounter = 0x00;
 uint16_t encryptedSeed = 0x00;

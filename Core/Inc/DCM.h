@@ -13,6 +13,7 @@
 #include <CanTp.h>
 #include <main.h>
 #include <Dcm_DID.h>
+#include <Globals.h>
 
 #include <Dcm_Service_ReadDataByIdentifier.h>
 #include <Dcm_Service_DiagnosticSessionControl.h>

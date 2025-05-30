@@ -1,8 +1,8 @@
 /*
  * Dcm_Service_WriteDataByIdentifier.c
  *
- *  Created on: Oct 24, 2023
- *      Author: FER3CLJ
+ *  Created on: May 29, 2025
+ *      Author: MNN1CLJ
  */
 #include <Dcm_Service_WriteDataByidentifier.h>
 
@@ -12,44 +12,38 @@ uint8_t Dcm_Service_WriteDataByIdentifier(uint8_t *requestMessageData, uint8_t r
 {
 	if (requestMessageData[0] != DCM_SERVICE_ID_WRITE_DATA_BY_IDENTIFIER)
 		{
-			return 0x00;
+			return DCM_NRC_SERVICE_NOT_SUPPORTED;
 		}
 
-    if(requestMessageLength < 4){
-    	responseData[0] = NEGATIVE_RESPONSE_SID;
-    	responseData[1] = 0x13;
-
-    	return 0x00;
-
+    if(requestMessageLength < 4)
+    {
+    	return DCM_NRC_INCORRECT_MESSAGE_LENGTH_OR_INVALID_FORMAT;
     }
 
-	uint8_t responseDataIndex = 0;
-    responseData[responseDataIndex++] = DCM_SERVICE_ID_WRITE_DATA_BY_IDENTIFIER_RESPONSE_SID;
-
-    uint8_t requestDataIndex = 1;
-    uint8_t didHighByte = requestMessageData[requestDataIndex++];
-    uint8_t didLowByte = requestMessageData[requestDataIndex++];
-    uint16_t did = ((uint16_t)didHighByte << 8) + didLowByte;
-
-    for (uint8_t currentDidIndex = 0; currentDidIndex < DCM_DID_COUNT; currentDidIndex++){
-
-    	Dcm_DID *currentDid = allDIDs[currentDidIndex];
-
-    	if (allDIDs[currentDidIndex]->id == did){
-    		responseData[responseDataIndex++] = didHighByte;
-    		responseData[responseDataIndex++] = didLowByte;
-
-    		for (uint8_t currentDidDataIndex = 0; currentDidDataIndex <= requestMessageLength-requestDataIndex; currentDidDataIndex++){
-
-    				currentDid->data[currentDidDataIndex] = requestMessageData[requestDataIndex++];
-    		}
-
-    	}
-
+    if(requestMessageLength > 5)
+    {
+        return DCM_NRC_INCORRECT_MESSAGE_LENGTH_OR_INVALID_FORMAT;
     }
 
-    			*responseDataLength = responseDataIndex;
+	uint8_t responseDataIndex = 1;
+	uint8_t didHighByte = requestMessageData[responseDataIndex++];
+	uint8_t didLowByte = requestMessageData[responseDataIndex++];
+	uint16_t did = ((uint16_t)didHighByte << 8) | didLowByte;
 
+	uint8_t didDataHighByte = requestMessageData[responseDataIndex++];
+	uint8_t didDataLowByte = requestMessageData[responseDataIndex++];
+	uint16_t didData = ((uint16_t)didDataHighByte << 8) | didDataLowByte;
+
+	uint16_t result = EE_WriteVariable(did, didData);
+	if (result != HAL_OK)
+	{
+	    return DCM_NRC_GENERAL_PROGRAMMING_FAILURE;
+	} else
+	{
+		responseData[0] = didHighByte;
+		responseData[1] = didLowByte;
+		*responseDataLength = 2; // two bytes of DID in response
+	}
 
     return 0x00;
 }

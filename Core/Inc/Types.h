@@ -62,12 +62,21 @@ typedef struct
 	Dcm_MessageData data[8];
 } Dcm_Message;
 
+//structure for DID - before EEPROM emulation
 typedef struct
 {
 	uint16_t id;
 	uint8_t dataLength;
 	uint8_t data[30];
 } Dcm_DID;
+
+//// structure for DID - with EEPROM emulation; 2 bytes of data available
+//typedef struct
+//{
+//	uint16_t id;
+//	uint8_t data[30];
+//} Dcm_DID;
+
 typedef uint8_t Dcm_Service_ResponseCode;
 
 /* STM32 ABSTRACT TYPES */

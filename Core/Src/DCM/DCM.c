@@ -7,17 +7,16 @@
 
 #include <Dcm.h>
 
-volatile uint8_t Dcm_ActiveSecurityLevel = 0x00;
-
 // The encryptedSeed is present here for testing purposes. It will be used as the key of the sendKey sub-function
 extern uint16_t encryptedSeed;
+uint8_t Dcm_ActiveSecurityLevel = DCM_SESSION_DEFAULT;
 
 void Dcm_Init()
 {
-	Dcm_DID_Init();
-
-//	Dcm_Test_ReadDataByIdentifier();
-	Dcm_Test_SecurityAccess();
+	//Dcm_DID_Init();
+	Dcm_Test_WriteDataByIdentifier();
+	//Dcm_Test_ReadDataByIdentifier();
+	//Dcm_Test_SecurityAccess();
 }
 
 //creating the response - serviceResponse -> 0x00 or NRC from the service; response -> the final response; serviceID -> id of the service;
@@ -143,6 +142,16 @@ void Dcm_Test_ReadDataByIdentifier()
 	uint8_t responseData[8];
 	uint8_t responseDataLength;
 	Dcm_Service_ResponseCode responseCode = Dcm_Service_ReadDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
+}
+
+void Dcm_Test_WriteDataByIdentifier()
+{
+	// Testing ReadDataByIdentifier
+	uint8_t requestMessageLength = 5;
+	uint8_t requestMessageData[3] = { 0x22, 0x20, 0x10, 0x11, 0x11};
+	uint8_t responseData[8];
+	uint8_t responseDataLength;
+	Dcm_Service_ResponseCode responseCode = Dcm_Service_WriteDataByIdentifier(requestMessageData, requestMessageLength, responseData, &responseDataLength);
 }
 
 void Dcm_Test_SecurityAccess()

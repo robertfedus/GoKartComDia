@@ -23,8 +23,8 @@ void CanIf_Client(void)
 	Can_MessageLength messageLength;
 	Can_Payload Can_TxData[6];
 
-	if (step % 2 == 0)
-	{
+//	if (step % 2 == 0)
+//	{
 	// StdId for the transmitted message
 	messageStdId = CAN_DCM_STDID;
 	// Transmitted message length
@@ -33,24 +33,26 @@ void CanIf_Client(void)
 	 Can_TxData[0] = 0x22;
 	 Can_TxData[1] = 0x84;
 	 Can_TxData[2] = 0x04;
-	 step++;
-	}
-	else {
-		// StdId for the transmitted message
-		messageStdId = CAN_DCM_STDID;
-		// Transmitted message length
-		messageLength = 8;
-		// Transmitted payload
-		 Can_TxData[0] = 0x23;
-		 Can_TxData[1] = 0x24;
-		 Can_TxData[2] = 0x20;
-		 Can_TxData[3] = 0x48;
-		 Can_TxData[4] = 0x13;
-		 Can_TxData[5] = 0x92;
-		 Can_TxData[6] = 0x01;
-		 Can_TxData[7] = 0x03;
-		 step++;
-	}
+//	 Can_TxData[3] = 0x11;
+//	 Can_TxData[4] = 0x11;
+//	 step++;
+//	}
+//	else {
+//		// StdId for the transmitted message
+//		messageStdId = CAN_DCM_STDID;
+//		// Transmitted message length
+//		messageLength = 8;
+//		// Transmitted payload
+//		 Can_TxData[0] = 0x23;
+//		 Can_TxData[1] = 0x24;
+//		 Can_TxData[2] = 0x20;
+//		 Can_TxData[3] = 0x48;
+//		 Can_TxData[4] = 0x13;
+//		 Can_TxData[5] = 0x92;
+//		 Can_TxData[6] = 0x01;
+//		 Can_TxData[7] = 0x03;
+//		 step++;
+//	}
 	// Call CanDrv to transmit data to the CAN bus
 	if (CanIf_TxConfirmation(messageStdId, messageLength, Can_TxData) == COMDIA_NOT_OK)
 	{

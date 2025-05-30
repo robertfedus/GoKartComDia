@@ -14,6 +14,7 @@ Dcm_DID DID_0xF110_ecuDiagnosticIdentification;
 Dcm_DID DID_0xF1A2_vectorDeliveryID;
 Dcm_DID DID_0xF1BD_ecuSignatureType;
 
+// intializing DIDs to test functionality before emulating EEPROM
 void Dcm_DID_Init()
 {
 	DID_0x100B_diagToolAndSessionStatus.id = 0x100B;

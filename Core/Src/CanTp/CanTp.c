@@ -19,7 +19,7 @@ void CanTp_Init(void)
 {
 	CanTp_DcmFramePrev.id = 0x85; // random value
 	CanTp_PduRFrame.id = -1;
-	Dcm_Init();
+	//Dcm_Init();
 }
 
 void (*operations[])(CanTp_Frame *frame) = {PduR_Dcm_SendRequest, PduR_CanTp_SendResponse};

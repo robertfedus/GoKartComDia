@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <Constants.h>
 #include <Types.h>
+#include <EEPROM/eeprom.h>
 
 #define DCM_SERVICE_ID_WRITE_DATA_BY_IDENTIFIER_RESPONSE_SID 0x6E
 #define NEGATIVE_RESPONSE_SID 0x7F
